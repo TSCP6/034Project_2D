@@ -2,9 +2,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
+public class PrefabGroup
+{
+    public string groupName;
+    public List<GameObject> prefabs = new List<GameObject>();
+}
+
+[System.Serializable]
+public class GroupSpawnOrder
+{
+    public string groupName;
+    public List<int> prefabOrder = new List<int>();
+}
+
 public class ObjCreator : MonoBehaviour
 {
-    public List<GameObject> prefabList = new List<GameObject>(); //预制体列表
+    public List<PrefabGroup> prefabGroups = new List<PrefabGroup>(); // 三类预制体分组
+    public List<GroupSpawnOrder> groupSpawnOrders = new List<GroupSpawnOrder>(); // 每组组内生成顺序
 
     public Material previewMaterial;
     public Color previewColor = new Color(1f, 1f, 1f, 0.4f);
@@ -16,12 +31,13 @@ public class ObjCreator : MonoBehaviour
     private bool isPreviewActive;
     private bool waitMouseReleaseAfterButton; //用于确认是否是二次点击防止物体
     private Camera mainCam;
-    private ObjBase objBaseController;
+    private List<int> nextOrderIndices = new List<int>();
+    private int pendingGroupIndex = -1;
 
     void Start()
     {
         mainCam = Camera.main;
-        objBaseController = FindObjectOfType<ObjBase>();
+        InitOrderIndices();
     }
 
     void Update()
@@ -48,23 +64,77 @@ public class ObjCreator : MonoBehaviour
         }
     }
 
-    public void SelectPreviewByIndex(int prefabIndex) //根据索引来选择预制体
+    public void SelectPreviewByIndex(int groupIndex) //根据组索引按该组顺序选择预制体
     {
-        if (prefabIndex < 0 || prefabIndex >= prefabList.Count)
+        if (groupIndex < 0 || groupIndex >= prefabGroups.Count)
         {
-            Debug.LogWarning($"Prefab index out of range: {prefabIndex}");
+            Debug.LogWarning($"Prefab group index out of range: {groupIndex}");
             return;
         }
 
-        if (prefabList[prefabIndex] == null)
+        PrefabGroup group = prefabGroups[groupIndex];
+        if (group == null || group.prefabs == null || group.prefabs.Count == 0)
         {
-            Debug.LogWarning($"Prefab at index {prefabIndex} is null.");
+            Debug.LogWarning($"Prefab group {groupIndex} is empty.");
             return;
         }
 
-        selectedPrefab = prefabList[prefabIndex];
+        EnsureOrderIndicesSize();
+
+        if (groupIndex >= groupSpawnOrders.Count || groupSpawnOrders[groupIndex] == null)
+        {
+            Debug.LogWarning($"Spawn order for group {groupIndex} is missing.");
+            return;
+        }
+
+        GroupSpawnOrder orderConfig = groupSpawnOrders[groupIndex];
+        if (orderConfig.prefabOrder == null || orderConfig.prefabOrder.Count == 0)
+        {
+            Debug.LogWarning($"Spawn order for group {groupIndex} is empty.");
+            return;
+        }
+
+        int orderIndex = nextOrderIndices[groupIndex];
+        if (orderIndex >= orderConfig.prefabOrder.Count)
+        {
+            Debug.Log($"Group {groupIndex} sequence is exhausted and cannot generate more.");
+            return;
+        }
+
+        int prefabIndex = orderConfig.prefabOrder[orderIndex];
+        if (prefabIndex < 0 || prefabIndex >= group.prefabs.Count)
+        {
+            Debug.LogWarning($"Prefab index {prefabIndex} is out of range in group {groupIndex}.");
+            return;
+        }
+
+        if (group.prefabs[prefabIndex] == null)
+        {
+            Debug.LogWarning($"Prefab group {groupIndex} index {prefabIndex} is null.");
+            return;
+        }
+
+        selectedPrefab = group.prefabs[prefabIndex];
+        pendingGroupIndex = groupIndex;
         CreatePreviewObject();
         waitMouseReleaseAfterButton = true; //已生成预览物体，且为第一次点击
+    }
+
+    private void InitOrderIndices()
+    {
+        nextOrderIndices.Clear();
+        for (int i = 0; i < prefabGroups.Count; i++)
+        {
+            nextOrderIndices.Add(0);
+        }
+    }
+
+    private void EnsureOrderIndicesSize()
+    {
+        while (nextOrderIndices.Count < prefabGroups.Count)
+        {
+            nextOrderIndices.Add(0);
+        }
     }
 
     private void CreatePreviewObject()
@@ -163,6 +233,12 @@ public class ObjCreator : MonoBehaviour
         Vector3 finalPos = previewObject.transform.position;
         Quaternion finalRot = previewObject.transform.rotation;
         Instantiate(selectedPrefab, finalPos, finalRot);
+
+        if (pendingGroupIndex >= 0 && pendingGroupIndex < nextOrderIndices.Count)
+        {
+            nextOrderIndices[pendingGroupIndex]++;
+        }
+        pendingGroupIndex = -1;
 
         Destroy(previewObject);
         previewObject = null;
