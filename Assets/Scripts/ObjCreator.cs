@@ -65,7 +65,6 @@ public class ObjCreator : MonoBehaviour
         selectedPrefab = prefabList[prefabIndex];
         CreatePreviewObject();
         waitMouseReleaseAfterButton = true; //已生成预览物体，且为第一次点击
-        SetObjBaseDragEnabled(false);
     }
 
     private void CreatePreviewObject()
@@ -98,6 +97,12 @@ public class ObjCreator : MonoBehaviour
 
     private void ConfigurePreviewPhysics(GameObject obj) //配置预览预制体刚体属性
     { 
+        Collider2D[] colliders = obj.GetComponentsInChildren<Collider2D>();
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            colliders[i].enabled = false;
+        }
+
         Rigidbody2D[] rigidbodies = obj.GetComponentsInChildren<Rigidbody2D>();
         for (int i = 0; i < rigidbodies.Length; i++)
         {
@@ -163,13 +168,6 @@ public class ObjCreator : MonoBehaviour
         previewObject = null;
         selectedPrefab = null;
         isPreviewActive = false;
-
-        // Make this placement click equivalent to ObjBase release click.
-        SetObjBaseDragEnabled(true);
-        if (objBaseController != null)
-        {
-            objBaseController.ConsumeNextLeftClickAsRelease();
-        }
     }
 
     private Vector3 GetMouseWorldPos()
@@ -189,18 +187,5 @@ public class ObjCreator : MonoBehaviour
     private bool IsPointerOverUi() //检测鼠标是否在UI上，物体不能放在UI的位置
     {
         return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
-    }
-
-    private void SetObjBaseDragEnabled(bool enabled)
-    {
-        if (objBaseController == null)
-        {
-            objBaseController = FindObjectOfType<ObjBase>();
-        }
-
-        if (objBaseController != null)
-        {
-            objBaseController.SetDragEnabled(enabled);
-        }
     }
 }

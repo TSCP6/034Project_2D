@@ -5,15 +5,12 @@ using UnityEngine;
 public class ObjBase : MonoBehaviour
 {
     public LayerMask controllableLayer;
-    public bool dragEnabled = true;
 
     protected Camera mainCam;
 
     private Rigidbody2D draggingRb;
     private Vector3 dragOffset;
     private bool isDragging;
-    private bool consumeNextLeftClick;
-
 
     // Start is called before the first frame update
     void Start()
@@ -24,30 +21,7 @@ public class ObjBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!dragEnabled)
-        {
-            return;
-        }
-
         Move();
-    }
-
-    public void SetDragEnabled(bool enabled)
-    {
-        dragEnabled = enabled;
-        if (!enabled)
-        {
-            isDragging = false;
-            draggingRb = null;
-        }
-    }
-
-    // Treat the current interaction as a release and ignore the next left-click down event.
-    public void ConsumeNextLeftClickAsRelease()
-    {
-        isDragging = false;
-        draggingRb = null;
-        consumeNextLeftClick = true;
     }
 
     //存在拖拽太快会穿过墙体的bug
@@ -55,12 +29,6 @@ public class ObjBase : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (consumeNextLeftClick)
-            {
-                consumeNextLeftClick = false;
-                return;
-            }
-
             if (!isDragging)
             {
                 Vector3 mouseWorld = GetMouseWorldPos();
