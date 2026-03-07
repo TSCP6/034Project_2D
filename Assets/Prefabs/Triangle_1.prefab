@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4896059658660547548}
   - component: {fileID: 8758538804489091930}
   - component: {fileID: 21011592474301904}
-  - component: {fileID: 300654634391034168}
   - component: {fileID: 7430465117044707452}
+  - component: {fileID: 4280204824565825284}
   m_Layer: 6
   m_Name: Triangle_1
   m_TagString: Untagged
@@ -114,8 +114,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &300654634391034168
-BoxCollider2D:
+--- !u!114 &7430465117044707452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7193779765970724759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a3fd3c3439f9840b444cb1da0fcc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllableLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  dragEnabled: 1
+--- !u!60 &4280204824565825284
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -146,7 +162,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -156,22 +172,9 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &7430465117044707452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7193779765970724759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1a3fd3c3439f9840b444cb1da0fcc58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controllableLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  targetObj: {fileID: 0}
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 0.5773587}
+      - {x: -0.5, y: -0.28866667}
+      - {x: 0.5, y: -0.28866667}
+  m_UseDelaunayMesh: 0
