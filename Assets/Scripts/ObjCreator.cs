@@ -23,6 +23,7 @@ public class ObjCreator : MonoBehaviour
 
     public Material previewMaterial;
     public Color previewColor = new Color(1f, 1f, 1f, 0.4f);
+    public float rotateSpeedDegrees = 180f;
 
     public Vector2 defaultPos; //初始生成位置
 
@@ -57,6 +58,7 @@ public class ObjCreator : MonoBehaviour
         }
 
         UpdatePreviewPosition();
+        HandlePreviewRotation();
 
         if (Input.GetMouseButtonDown(0) && !IsPointerOverUi())
         {
@@ -222,6 +224,27 @@ public class ObjCreator : MonoBehaviour
         previewObject.transform.position = mouseWorld;
     }
 
+    private void HandlePreviewRotation()
+    {
+        float rotateInput = 0f;
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rotateInput += 1f;
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            rotateInput -= 1f;
+        }
+
+        if (rotateInput != 0f)
+        {
+            float deltaAngle = rotateInput * rotateSpeedDegrees * Time.deltaTime;
+            previewObject.transform.Rotate(0f, 0f, deltaAngle);
+        }
+    }
+
     private void PlaceFinalObject() //放置物体
     {
         if (selectedPrefab == null || previewObject == null)
@@ -262,6 +285,7 @@ public class ObjCreator : MonoBehaviour
 
     private bool IsPointerOverUi() //检测鼠标是否在UI上，物体不能放在UI的位置
     {
-        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+        // return EventSystem.current != null  && EventSystem.current.IsPointerOverGameObject();
+        return false;
     }
 }
