@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3225392071983562117}
   - component: {fileID: 6409569343798632091}
   - component: {fileID: -4847281574675437477}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Triangle_2-2_RA
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

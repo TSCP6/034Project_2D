@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4070121065079844082}
   - component: {fileID: 7455047090838063434}
   - component: {fileID: -3768533193950534948}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Triangle_1-4_RA_l
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

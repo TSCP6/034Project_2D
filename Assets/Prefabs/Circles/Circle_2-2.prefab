@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4720276266132660330}
   - component: {fileID: 3255438387593849677}
   - component: {fileID: -5546750927647468114}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle_2-2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
