@@ -50,14 +50,35 @@ public class LineLinkManager : MonoBehaviour
     }
 
     // --- 给 UI 按钮调用的公共方法 ---
+    // --- 给 UI 按钮调用的公共方法 ---
     public void EnableLinkOnce()
     {
-        if (remainingUses <= 0 || isActive) return;
+        // 1. 如果没有使用次数了，直接返回
+        if (remainingUses <= 0) return;
 
-        isActive = true;
-        Debug.Log($"功能激活。剩余次数: {remainingUses}");
+        // 2. 如果当前已经是激活状态 (isActive == true)
+        if (isActive)
+        {
+            // 如果正在连线预览中（已经点了第一下），调用取消逻辑
+            if (isLinking)
+            {
+                CancelLinking();
+                Debug.Log("连线预览已取消。");
+            }
+            else
+            {
+                // 如果只是开启了功能还没点第一下，直接重置状态
+                FinishAction();
+                Debug.Log("功能已关闭。");
+            }
+        }
+        else
+        {
+            // 3. 如果当前是关闭状态，则开启功能
+            isActive = true;
+            Debug.Log($"功能激活。剩余次数: {remainingUses}");
+        }
     }
-
     void Update()
     {
         // 处理按钮闪烁视觉效果
@@ -106,7 +127,8 @@ public class LineLinkManager : MonoBehaviour
 
         if (isActive)
         {
-            float lerp = Mathf.PingPong(Time.time * flashSpeed, 1.0f);
+            // 使用 unscaledTime 确保在 Time.timeScale 为 0 时逻辑依然运行
+            float lerp = Mathf.PingPong(Time.unscaledTime * flashSpeed, 1.0f);
             buttonImage.color = Color.Lerp(originalBtnColor, flashColor, lerp);
         }
         else if (buttonImage.color != originalBtnColor)
