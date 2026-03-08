@@ -859,7 +859,7 @@ MonoBehaviour:
   useSmoothing: 1
   smoothTime: 0.1
   minY: 0
-  maxY: 7
+  maxY: 2
 --- !u!1 &809182481
 GameObject:
   m_ObjectHideFlags: 0
