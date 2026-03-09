@@ -107,6 +107,22 @@ public class SpriteSwitcher : MonoBehaviour
             capsule.offset = spriteCenter;
         }
 
-        //三角形使用sprite mask处理
+        if (TryGetComponent<PolygonCollider2D>(out var polygon))
+        {
+            int shapeCount = currentSprite.GetPhysicsShapeCount();
+            if (shapeCount > 0)
+            {
+                polygon.pathCount = shapeCount;
+                var points = new List<Vector2>();
+                for (int i = 0; i < shapeCount; i++)
+                {
+                    points.Clear();
+                    currentSprite.GetPhysicsShape(i, points);
+                    polygon.SetPath(i, points);
+                }
+            }
+
+            polygon.offset = spriteCenter;
+        }
     }
 }

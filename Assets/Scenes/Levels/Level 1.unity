@@ -1801,7 +1801,7 @@ MonoBehaviour:
     - {fileID: 7455935044586011102, guid: 3c045ec9c4a038646b622debf616a5cc, type: 3}
     - {fileID: 8969638162848083001, guid: 2fa8a34d14021ee4fb8249b34abe3534, type: 3}
     - {fileID: 2277039533059927640, guid: 816ceadcb4a6a184c95e24548774698f, type: 3}
-    - {fileID: 6416388440244831547, guid: 05579518c4db3e14d96a5981c1a118dd, type: 3}
+    - {fileID: 2277039533059927640, guid: 14c656a6fe84bdc43bd7eb1d789f3542, type: 3}
   - groupName: Square
     prefabs:
     - {fileID: 519099820679181832, guid: 0925cc7cd771a304c9fce557d228a5b6, type: 3}
@@ -1814,11 +1814,11 @@ MonoBehaviour:
     - {fileID: 2881670205427416579, guid: 6b478a02cdf80ac43a678f65439de7b1, type: 3}
   groupSpawnOrders:
   - groupName: Triangle
-    prefabOrder: 02000000030000000000000001000000
+    prefabOrder: 0200000003000000
   - groupName: Square
-    prefabOrder: 0000000000000000030000000100000002000000
+    prefabOrder: 000000000000000003000000
   - groupName: Circle
-    prefabOrder: 000000000000000001000000
+    prefabOrder: 0000000000000000
   previewMaterial: {fileID: 0}
   previewColor: {r: 1, g: 1, b: 1, a: 0.4}
   rotateSpeedDegrees: 180
