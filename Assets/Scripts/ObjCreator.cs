@@ -34,6 +34,7 @@ public class ObjCreator : MonoBehaviour
     private Camera mainCam;
     private List<int> nextOrderIndices = new List<int>();
     private int pendingGroupIndex = -1;
+    private Quaternion currentPreviewRotation = Quaternion.identity;
 
     void Start()
     {
@@ -59,10 +60,12 @@ public class ObjCreator : MonoBehaviour
 
         UpdatePreviewPosition();
         HandlePreviewRotation();
+        previewObject.transform.rotation = currentPreviewRotation;
 
         if (Input.GetMouseButtonDown(0) && !IsPointerOverUi())
         {
             PlaceFinalObject();
+            currentPreviewRotation = Quaternion.Euler(0f, 0f, 0f);
         }
     }
 
@@ -158,13 +161,14 @@ public class ObjCreator : MonoBehaviour
             startPos = defaultPos;
         }
 
-        previewObject = Instantiate(selectedPrefab, startPos, Quaternion.identity);
+        previewObject = Instantiate(selectedPrefab, startPos, currentPreviewRotation);
         previewObject.name = selectedPrefab.name + "_Preview";
 
         ConfigurePreviewPhysics(previewObject);
         ApplyPreviewMaterial(previewObject);
 
         isPreviewActive = true;
+        currentPreviewRotation = previewObject.transform.rotation;
     }
 
     private void ConfigurePreviewPhysics(GameObject obj) //配置预览预制体刚体属性
@@ -240,8 +244,9 @@ public class ObjCreator : MonoBehaviour
 
         if (rotateInput != 0f)
         {
-            float deltaAngle = rotateInput * rotateSpeedDegrees * Time.deltaTime;
-            previewObject.transform.Rotate(0f, 0f, deltaAngle);
+            // 使用 unscaledDeltaTime 确保时停时依然可以旋转预览体
+            float deltaAngle = rotateInput * rotateSpeedDegrees * Time.unscaledDeltaTime;
+            currentPreviewRotation = Quaternion.Euler(0f, 0f, currentPreviewRotation.eulerAngles.z + deltaAngle);
         }
     }
 
@@ -285,7 +290,7 @@ public class ObjCreator : MonoBehaviour
 
     private bool IsPointerOverUi() //检测鼠标是否在UI上，物体不能放在UI的位置
     {
-        // return EventSystem.current != null  && EventSystem.current.IsPointerOverGameObject();
-        return false;
+        return EventSystem.current != null  && EventSystem.current.IsPointerOverGameObject();
+        // return false;
     }
 }

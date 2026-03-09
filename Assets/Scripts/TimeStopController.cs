@@ -27,8 +27,5 @@ public class TimeStopController : MonoBehaviour
             Time.timeScale = 1f; // 时间恢复正常
             Debug.Log("时间恢复正常");
         }
-
-        // 可选：调整固定步长，确保物理模拟在恢复后保持平滑
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
 }
