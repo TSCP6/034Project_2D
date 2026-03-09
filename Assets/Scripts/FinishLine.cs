@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class FinishLine2D : MonoBehaviour
 {
-    [Header("????")]
-    public float requiredTime = 5.0f; // ?????????????
-    public string playerTag = "Player"; // ????????
+    [Header("通关设置")]
+    public float requiredTime = 3.0f; // 需要持续停留的时间（秒）
+    public string playerTag = "Player"; // 玩家物体的标签
 
     private float timer = 0f;
     private bool isTouching = false;
@@ -16,7 +16,7 @@ public class FinishLine2D : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            // ?????????????????????????????? UI ??????
+            // 停留时间达到要求后切换下一关（你也可以在这里先播放 UI 倒计时）
             if (timer >= requiredTime)
             {
                 LoadNextLevel();
@@ -24,24 +24,24 @@ public class FinishLine2D : MonoBehaviour
         }
     }
 
-    // ???2D ????????? OnTriggerEnter2D
-    private void OnTriggerEnter2D(Collider2D other)
+    // 进入 2D 触发器时触发 OnTriggerEnter2D
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag(playerTag))
         {
             isTouching = true;
-            Debug.Log("??????...");
+            Debug.Log("玩家已进入终点区域，开始计时...");
         }
     }
 
-    // ???2D ????????? OnTriggerExit2D
+    // 离开 2D 触发器时触发 OnTriggerExit2D
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag(playerTag))
         {
             isTouching = false;
-            timer = 0f; // ??????????
-            Debug.Log("????????");
+            timer = 0f; // 离开后重置计时
+            Debug.Log("玩家离开终点区域，计时重置");
         }
     }
 
@@ -56,7 +56,7 @@ public class FinishLine2D : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("????????????????????");
+            Debug.LogWarning("当前已是最后一关，无法继续加载下一关");
         }
     }
 }
