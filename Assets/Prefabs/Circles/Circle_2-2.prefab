@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4720276266132660330}
   - component: {fileID: 3255438387593849677}
   - component: {fileID: -5546750927647468114}
+  - component: {fileID: 2057304557903137323}
   m_Layer: 6
   m_Name: Circle_2-2
   m_TagString: Player
@@ -148,3 +149,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &2057304557903137323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6530618941942140198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6508de51043e67440bb519e90abe01cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - sprite: {fileID: 21300000, guid: bf47d64de6994ae439ca588c035a85a3, type: 3}
+    level: 1
+  sprite: {fileID: 0}
+  keepWorldSize: 1
+  syncColliderShape: 1

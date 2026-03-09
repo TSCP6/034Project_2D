@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1974412547809056010}
   - component: {fileID: 1098621272864777615}
   - component: {fileID: -5368495466624500575}
+  - component: {fileID: 5001207631284875035}
   m_Layer: 6
   m_Name: Triangle_1-4_RA_r
   m_TagString: Player
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.9, y: -0.3, z: 0}
-  m_LocalScale: {x: -0.1, y: 0.2, z: 0.10557729}
+  m_LocalScale: {x: -0.1, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -164,3 +165,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5001207631284875035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416388440244831547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6508de51043e67440bb519e90abe01cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - sprite: {fileID: 21300000, guid: 89727b3f4352f9f4197fde0bdcbb2ca2, type: 3}
+    level: 1
+  sprite: {fileID: 0}
+  keepWorldSize: 1
+  syncColliderShape: 1
