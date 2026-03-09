@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3225392071983562117}
   - component: {fileID: 6409569343798632091}
   - component: {fileID: -4847281574675437477}
-  - component: {fileID: -5127366719313558775}
   m_Layer: 6
   m_Name: Triangle_2-2_RA
   m_TagString: Player
@@ -165,21 +164,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-5127366719313558775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8969638162848083001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6508de51043e67440bb519e90abe01cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites:
-  - sprite: {fileID: 0}
-    level: 1
-  sprite: {fileID: 0}
-  keepWorldSize: 1
-  syncColliderShape: 1

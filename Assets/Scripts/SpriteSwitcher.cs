@@ -13,7 +13,7 @@ public class SpriteSwitcher : MonoBehaviour
         public int level;
     }
 
-    public SpriteLevel[] sprites; 
+    public SpriteLevel[] sprites;
     public Sprite sprite;
 
     public bool keepWorldSize = true;      // 切换精灵后保持当前世界尺寸
@@ -27,9 +27,9 @@ public class SpriteSwitcher : MonoBehaviour
 
         Sprite targetSprite = null;
 
-        foreach(var s in sprites)
+        foreach (var s in sprites)
         {
-            if(s.level == curIndex)
+            if (s.level == curIndex)
             {
                 targetSprite = s.sprite;
                 break;
@@ -107,22 +107,6 @@ public class SpriteSwitcher : MonoBehaviour
             capsule.offset = spriteCenter;
         }
 
-        if (TryGetComponent<PolygonCollider2D>(out var polygon))
-        {
-            int shapeCount = currentSprite.GetPhysicsShapeCount();
-            if (shapeCount > 0)
-            {
-                polygon.pathCount = shapeCount;
-                var points = new List<Vector2>();
-                for (int i = 0; i < shapeCount; i++)
-                {
-                    points.Clear();
-                    currentSprite.GetPhysicsShape(i, points);
-                    polygon.SetPath(i, points);
-                }
-            }
-
-            polygon.offset = spriteCenter;
-        }
+        //三角形使用sprite mask处理
     }
 }
