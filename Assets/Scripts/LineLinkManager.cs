@@ -4,28 +4,28 @@ using UnityEngine.UI;
 
 public class LineLinkManager : MonoBehaviour
 {
-    [Header("次数限制 (n)")]
-    public int maxUses = 5;         // 本局总次数
-    private int remainingUses;      // 剩余次数
+    [Header("Usage Limit (n)")]
+    public int maxUses = 5;         // Total uses in this level
+    private int remainingUses;      // Remaining uses
 
-    [Header("配置")]
-    public GameObject linePrefab;    // 连线预制体 (带 LineRenderer 和 Rigidbody2D)
-    public LayerMask targetLayer;    // 目标物体的 Layer
-    public float maxLength = 5f;     // 线段最大长度
+    [Header("Configuration")]
+    public GameObject linePrefab;    // Line prefab (with LineRenderer and Rigidbody2D)
+    public LayerMask targetLayer;    // Layer of target objects
+    public float maxLength = 5f;     // Max line length
 
-    [Header("UI 引用")]
-    public Button linkButton;        // 关联的 UI 按钮
-    public Text usageText;           // (可选) 用于显示次数的文本
+    [Header("UI References")]
+    public Button linkButton;        // Linked UI button
+    public Text usageText;           // (Optional) text for usage display
 
-    [Header("颜色反馈")]
+    [Header("Color Feedback")]
     public Color normalColor = Color.white;
     public Color warningColor = Color.red;
-    public Color flashColor = Color.yellow; // 激活时按钮闪烁的颜色
+    public Color flashColor = Color.yellow; // Flash color when active
 
-    [Header("动画设置")]
-    public float flashSpeed = 5f;    // 按钮闪烁速度
+    [Header("Animation Settings")]
+    public float flashSpeed = 5f;    // Button flash speed
 
-    [Header("当前状态")]
+    [Header("Current State")]
     public bool isActive = false;
 
     private Rigidbody2D firstBody;
@@ -49,47 +49,47 @@ public class LineLinkManager : MonoBehaviour
         UpdateUI();
     }
 
-    // --- 给 UI 按钮调用的公共方法 ---
-    // --- 给 UI 按钮调用的公共方法 ---
+    // Public method for UI button click
+    // Public method for UI button click
     public void EnableLinkOnce()
     {
-        // 1. 如果没有使用次数了，直接返回
+        // 1. Return immediately if no uses remain
         if (remainingUses <= 0) return;
 
-        // 2. 如果当前已经是激活状态 (isActive == true)
+        // 2. If already active (isActive == true)
         if (isActive)
         {
-            // 如果正在连线预览中（已经点了第一下），调用取消逻辑
+            // If currently previewing a line (first click already made), cancel preview
             if (isLinking)
             {
                 CancelLinking();
-                Debug.Log("连线预览已取消。");
+                Debug.Log("Line preview canceled.");
             }
             else
             {
-                // 如果只是开启了功能还没点第一下，直接重置状态
+                // If feature is on but first click has not happened, just reset state
                 FinishAction();
-                Debug.Log("功能已关闭。");
+                Debug.Log("Feature disabled.");
             }
         }
         else
         {
-            // 3. 如果当前是关闭状态，则开启功能
+            // 3. If currently inactive, enable feature
             isActive = true;
-            Debug.Log($"功能激活。剩余次数: {remainingUses}");
+            Debug.Log($"Feature enabled. Remaining uses: {remainingUses}");
         }
     }
     void Update()
     {
-        // 处理按钮闪烁视觉效果
+        // Handle button flashing visual effect
         HandleButtonFlashing();
 
         if (!isActive) return;
 
-        // 1. 处理鼠标点击逻辑
+        // 1. Handle mouse click logic
         if (Input.GetMouseButtonDown(0))
         {
-            // UI 穿透检测，防止点按钮时直接在后面连线
+            // Prevent UI click-through from creating lines behind UI
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
 
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -108,13 +108,13 @@ public class LineLinkManager : MonoBehaviour
             }
         }
 
-        // 2. 连线预览更新
+        // 2. Update line preview
         if (isLinking && currentLineRenderer != null)
         {
             UpdateLinkPreview();
         }
 
-        // 3. 右键取消 (不扣次数)
+        // 3. Right click to cancel (does not consume uses)
         if (Input.GetMouseButtonDown(1) && isLinking)
         {
             CancelLinking();
@@ -127,7 +127,7 @@ public class LineLinkManager : MonoBehaviour
 
         if (isActive)
         {
-            // 使用 unscaledTime 确保在 Time.timeScale 为 0 时逻辑依然运行
+            // Use unscaledTime so this still runs when Time.timeScale is 0
             float lerp = Mathf.PingPong(Time.unscaledTime * flashSpeed, 1.0f);
             buttonImage.color = Color.Lerp(originalBtnColor, flashColor, lerp);
         }
@@ -171,7 +171,7 @@ public class LineLinkManager : MonoBehaviour
 
     void CompleteLink(Rigidbody2D secondBody)
     {
-        // 物理绑定
+        // Physics binding
         FixedJoint2D j1 = currentLineObj.AddComponent<FixedJoint2D>();
         j1.connectedBody = firstBody;
         j1.enableCollision = false;
@@ -180,7 +180,7 @@ public class LineLinkManager : MonoBehaviour
         j2.connectedBody = secondBody;
         j2.enableCollision = false;
 
-        // 赋予同步脚本
+        // Add sync script
         var syncer = currentLineObj.AddComponent<LineSyncer>();
         syncer.targetA = firstBody.transform;
         syncer.targetB = secondBody.transform;
@@ -209,7 +209,7 @@ public class LineLinkManager : MonoBehaviour
 
     void UpdateUI()
     {
-        if (usageText != null) usageText.text = "剩余: " + remainingUses;
+        if (usageText != null) usageText.text = "Remaining: " + remainingUses;
         if (linkButton != null && remainingUses <= 0)
         {
             linkButton.interactable = false;

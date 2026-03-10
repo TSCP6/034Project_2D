@@ -6,7 +6,7 @@ public class TimeStopController : MonoBehaviour
 
     void Update()
     {
-        // 检测空格键按下
+        // Detect Space key press
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ToggleTimeStop();
@@ -19,13 +19,13 @@ public class TimeStopController : MonoBehaviour
 
         if (isStopped)
         {
-            Time.timeScale = 0f; // 时间停止
-            Debug.Log("时间已停止");
+            Time.timeScale = 0f; // Time stopped
+            Debug.Log("Time has been stopped.");
         }
         else
         {
-            Time.timeScale = 1f; // 时间恢复正常
-            Debug.Log("时间恢复正常");
+            Time.timeScale = 1f; // Time resumed
+            Debug.Log("Time resumed.");
         }
     }
 }

@@ -18,19 +18,19 @@ public class GroupSpawnOrder
 
 public class ObjCreator : MonoBehaviour
 {
-    public List<PrefabGroup> prefabGroups = new List<PrefabGroup>(); // 三类预制体分组
-    public List<GroupSpawnOrder> groupSpawnOrders = new List<GroupSpawnOrder>(); // 每组组内生成顺序
+    public List<PrefabGroup> prefabGroups = new List<PrefabGroup>(); // Three prefab groups
+    public List<GroupSpawnOrder> groupSpawnOrders = new List<GroupSpawnOrder>(); // Spawn order inside each group
 
     public Material previewMaterial;
     public Color previewColor = new Color(1f, 1f, 1f, 0.4f);
     public float rotateSpeedDegrees = 180f;
 
-    public Vector2 defaultPos; //初始生成位置
+    public Vector2 defaultPos; // Initial spawn position
 
     private GameObject previewObject;
     private GameObject selectedPrefab;
     private bool isPreviewActive;
-    private bool waitMouseReleaseAfterButton; //用于确认是否是二次点击防止物体
+    private bool waitMouseReleaseAfterButton; // Prevent immediate placement from the same click
     private Camera mainCam;
     private List<int> nextOrderIndices = new List<int>();
     private int pendingGroupIndex = -1;
@@ -69,7 +69,7 @@ public class ObjCreator : MonoBehaviour
         }
     }
 
-    public void SelectPreviewByIndex(int groupIndex) //根据组索引按该组顺序选择预制体
+    public void SelectPreviewByIndex(int groupIndex) // Select prefab by group index and configured order
     {
         if (groupIndex < 0 || groupIndex >= prefabGroups.Count)
         {
@@ -122,7 +122,7 @@ public class ObjCreator : MonoBehaviour
         selectedPrefab = group.prefabs[prefabIndex];
         pendingGroupIndex = groupIndex;
         CreatePreviewObject();
-        waitMouseReleaseAfterButton = true; //已生成预览物体，且为第一次点击
+        waitMouseReleaseAfterButton = true; // Preview object created; wait for mouse release first
     }
 
     private void InitOrderIndices()
@@ -171,8 +171,8 @@ public class ObjCreator : MonoBehaviour
         currentPreviewRotation = previewObject.transform.rotation;
     }
 
-    private void ConfigurePreviewPhysics(GameObject obj) //配置预览预制体刚体属性
-    { 
+    private void ConfigurePreviewPhysics(GameObject obj) // Configure rigidbody settings for preview object
+    {
         Collider2D[] colliders = obj.GetComponentsInChildren<Collider2D>();
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -192,7 +192,7 @@ public class ObjCreator : MonoBehaviour
     private void ApplyPreviewMaterial(GameObject obj)
     {
         SpriteRenderer[] sprites = obj.GetComponentsInChildren<SpriteRenderer>();
-        for (int i = 0; i < sprites.Length; i++) //设置为预览材质
+        for (int i = 0; i < sprites.Length; i++) // Apply preview visual style
         {
             Color c = sprites[i].color;
             c.r = previewColor.r;
@@ -244,13 +244,13 @@ public class ObjCreator : MonoBehaviour
 
         if (rotateInput != 0f)
         {
-            // 使用 unscaledDeltaTime 确保时停时依然可以旋转预览体
+            // Use unscaledDeltaTime so preview can rotate during time stop
             float deltaAngle = rotateInput * rotateSpeedDegrees * Time.unscaledDeltaTime;
             currentPreviewRotation = Quaternion.Euler(0f, 0f, currentPreviewRotation.eulerAngles.z + deltaAngle);
         }
     }
 
-    private void PlaceFinalObject() //放置物体
+    private void PlaceFinalObject() // Place final object
     {
         if (selectedPrefab == null || previewObject == null)
         {
@@ -288,9 +288,9 @@ public class ObjCreator : MonoBehaviour
         return world;
     }
 
-    private bool IsPointerOverUi() //检测鼠标是否在UI上，物体不能放在UI的位置
+    private bool IsPointerOverUi() // Prevent placing object while pointer is over UI
     {
-        return EventSystem.current != null  && EventSystem.current.IsPointerOverGameObject();
+        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
         // return false;
     }
 }

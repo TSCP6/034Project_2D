@@ -7,8 +7,8 @@ public class WindController : MonoBehaviour
     public float windForce = 5f;
     public float maxSpeed = 6f;
     public LayerMask windAffectedLayer;
-    public float exitTime = 5f; //风的持续时间
-    public float breakTime = 5f; //风的间歇时间
+    public float exitTime = 5f; // Wind active duration
+    public float breakTime = 5f; // Wind pause duration
 
     private float curTime;
     private bool isWinding = true;
@@ -80,7 +80,7 @@ public class WindController : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        // 防止运行中改 Layer/新增 Rigidbody 后漏收集
+        // Prevent missing bodies when Layer changes or Rigidbody is added at runtime
         if ((windAffectedLayer.value & (1 << collision.gameObject.layer)) == 0) return;
         if (!collision.TryGetComponent<Rigidbody2D>(out var rb)) return;
 

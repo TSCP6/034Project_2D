@@ -24,8 +24,8 @@ public class ObjBase : MonoBehaviour
         Move();
     }
 
-    //存在拖拽太快会穿过墙体的bug
-    void Move() 
+    // Known issue: dragging too fast may pass through walls
+    void Move()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -40,7 +40,7 @@ public class ObjBase : MonoBehaviour
                     isDragging = true;
                     dragOffset = draggingRb.transform.position - mouseWorld;
                     Debug.Log("dragging");
-                } 
+                }
             }
             else
             {

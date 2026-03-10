@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class CameraVerticalFollow2D : MonoBehaviour
 {
-    [Header("移动设置")]
-    public float camSpeed = 20f;       // 移动速度
-    public float edgeSize = 30f;      // 边缘触发范围（像素）
-    public bool useSmoothing = true;   // 是否开启平滑平移
-    public float smoothTime = 0.1f;    // 平滑缓冲时间
+    [Header("Movement Settings")]
+    public float camSpeed = 20f;       // Movement speed
+    public float edgeSize = 30f;      // Edge trigger range (pixels)
+    public bool useSmoothing = true;   // Enable smooth camera movement
+    public float smoothTime = 0.1f;    // Smooth damping time
 
-    [Header("上边缘中间触发区")]
+    [Header("Top Center Trigger Zone")]
     [Range(0.1f, 1f)]
-    public float topCenterWidthPercent = 0.7f; // 顶部可触发上移的中间宽度（占屏幕宽度百分比）
+    public float topCenterWidthPercent = 0.7f; // Width of top-center upward trigger area (screen width percent)
 
-    [Header("边界限制")]
+    [Header("Boundary Limits")]
     public float minY = -15f;
     public float maxY = 15f;
 
-    private float _currentVelocityY;   // 用于 SmoothDamp 的内部变量
+    private float _currentVelocityY;   // Internal velocity cache used by SmoothDamp
 
     void Update()
     {
@@ -30,7 +30,7 @@ public class CameraVerticalFollow2D : MonoBehaviour
         float rightLimit = (Screen.width + triggerWidth) * 0.5f;
         bool isInTopCenterArea = mousePosX >= leftLimit && mousePosX <= rightLimit;
 
-        // 1. 检测边缘触发
+        // 1. Detect edge trigger
         if (mousePosY >= Screen.height - edgeSize && isInTopCenterArea)
         {
             moveDir = 1f;
@@ -40,7 +40,7 @@ public class CameraVerticalFollow2D : MonoBehaviour
             moveDir = -1f;
         }
 
-        // 2. 计算目标位置
+        // 2. Compute target position
         if (moveDir != 0)
         {
             float targetY = transform.position.y + (moveDir * camSpeed * Time.unscaledDeltaTime);
@@ -48,19 +48,19 @@ public class CameraVerticalFollow2D : MonoBehaviour
 
             if (useSmoothing)
             {
-                // 平滑移动效果
+                // Smooth movement
                 float newY = Mathf.SmoothDamp(transform.position.y, targetY, ref _currentVelocityY, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
                 transform.position = new Vector3(transform.position.x, newY, transform.position.z);
             }
             else
             {
-                // 线性硬移动
+                // Linear hard movement
                 transform.position = new Vector3(transform.position.x, targetY, transform.position.z);
             }
         }
         else
         {
-            // 当鼠标离开边缘时，重置速度缓存，防止奇怪的惯性
+            // Reset velocity cache when cursor leaves edge to avoid odd inertia
             _currentVelocityY = 0f;
         }
     }

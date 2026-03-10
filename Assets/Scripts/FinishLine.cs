@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class FinishLine2D : MonoBehaviour
 {
-    [Header("通关设置")]
-    public float requiredTime = 3.0f; // 需要持续停留的时间（秒）
-    public string playerTag = "Player"; // 玩家物体的标签
+    [Header("Level Completion Settings")]
+    public float requiredTime = 3.0f; // Required continuous stay time (seconds)
+    public string playerTag = "Player"; // Player object tag
 
     private float timer = 0f;
     private bool isTouching = false;
@@ -16,7 +16,7 @@ public class FinishLine2D : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            // 停留时间达到要求后切换下一关（你也可以在这里先播放 UI 倒计时）
+            // Load next level after required stay time is reached
             if (timer >= requiredTime)
             {
                 LoadNextLevel();
@@ -24,24 +24,24 @@ public class FinishLine2D : MonoBehaviour
         }
     }
 
-    // 进入 2D 触发器时触发 OnTriggerEnter2D
+    // Triggered while inside a 2D trigger
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag(playerTag))
         {
             isTouching = true;
-            Debug.Log("玩家已进入终点区域，开始计时...");
+            Debug.Log("Player entered finish zone. Timer started...");
         }
     }
 
-    // 离开 2D 触发器时触发 OnTriggerExit2D
+    // Triggered when exiting a 2D trigger
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag(playerTag))
         {
             isTouching = false;
-            timer = 0f; // 离开后重置计时
-            Debug.Log("玩家离开终点区域，计时重置");
+            timer = 0f; // Reset timer after leaving
+            Debug.Log("Player left finish zone. Timer reset.");
         }
     }
 
@@ -56,7 +56,7 @@ public class FinishLine2D : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("当前已是最后一关，无法继续加载下一关");
+            Debug.LogWarning("This is already the last level. Cannot load next level.");
         }
     }
 }

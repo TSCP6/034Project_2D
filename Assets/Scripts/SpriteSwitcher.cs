@@ -16,8 +16,8 @@ public class SpriteSwitcher : MonoBehaviour
     public SpriteLevel[] sprites;
     public Sprite sprite;
 
-    public bool keepWorldSize = true;      // 切换精灵后保持当前世界尺寸
-    public bool syncColliderShape = true;  // 切换精灵后同步常见 2D 碰撞体
+    public bool keepWorldSize = true;      // Keep current world size after sprite switch
+    public bool syncColliderShape = true;  // Sync common 2D colliders after sprite switch
 
     // Start is called before the first frame update
     void Start()
