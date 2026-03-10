@@ -43,9 +43,10 @@ public class WindController : MonoBehaviour
         }
         else
         {
-            windDirection = -windDirection;
             if (curTime >= breakTime)
             {
+                // Flip direction once per wind cycle (not every frame during break).
+                windDirection = -windDirection;
                 isWinding = true;
                 curTime = 0f;
             }
