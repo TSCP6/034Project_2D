@@ -10,11 +10,15 @@ public class FinishLine2D : MonoBehaviour
 
     private float timer = 0f;
     private bool isTouching = false;
+    private bool alphaAdd = false;
+    private bool alphaSub = false;
     private SpriteRenderer sr;
 
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        alphaAdd = false;
+        alphaSub = false;
     }
 
     void Update()
@@ -37,8 +41,28 @@ public class FinishLine2D : MonoBehaviour
         if (other.CompareTag(playerTag))
         {
             isTouching = true;
-            ChangeAlpha();
             Debug.Log("Player entered finish zone. Timer started...");
+            if (!alphaAdd)
+            {
+                ChangeAlpha();
+                alphaAdd = true;
+                alphaSub = false;
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag(playerTag))
+        {
+            isTouching = true;
+            Debug.Log("Player entered finish zone. Timer started...");
+            if (!alphaAdd)
+            {
+                ChangeAlpha();
+                alphaAdd = true;
+                alphaSub = false;
+            }
         }
     }
 
@@ -49,8 +73,13 @@ public class FinishLine2D : MonoBehaviour
         {
             isTouching = false;
             timer = 0f; // Reset timer after leaving
-            ChangeAlpha();
             Debug.Log("Player left finish zone. Timer reset.");
+            if (!alphaSub)
+            {
+                ChangeAlpha();
+                alphaAdd = false;
+                alphaSub = true;
+            }
         }
     }
 

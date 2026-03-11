@@ -180,7 +180,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 52825c45bf8801f43ac823fa55545afd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3bdfa3dc53734bc4eae3f4dd0e89b66a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -200,7 +200,7 @@ Transform:
   m_GameObject: {fileID: 12367524}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.47, z: 0}
+  m_LocalPosition: {x: -0.017, y: 3.436, z: 0}
   m_LocalScale: {x: 1.1083, y: 1.4167, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1075,18 +1075,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: circle, Assembly-CSharp
-        m_MethodName: OnButtonClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1427078091}
         m_TargetAssemblyTypeName: ObjCreator, Assembly-CSharp
         m_MethodName: SelectPreviewByIndex
@@ -1524,18 +1512,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: triangle, Assembly-CSharp
-        m_MethodName: OnButtonClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1427078091}
         m_TargetAssemblyTypeName: ObjCreator, Assembly-CSharp
         m_MethodName: SelectPreviewByIndex
@@ -1846,14 +1822,14 @@ MonoBehaviour:
   - groupName: Triangle
     prefabs:
     - {fileID: 7455935044586011102, guid: 3c045ec9c4a038646b622debf616a5cc, type: 3}
-    - {fileID: 8969638162848083001, guid: 2fa8a34d14021ee4fb8249b34abe3534, type: 3}
-    - {fileID: 2277039533059927640, guid: 816ceadcb4a6a184c95e24548774698f, type: 3}
-    - {fileID: 2277039533059927640, guid: 14c656a6fe84bdc43bd7eb1d789f3542, type: 3}
+    - {fileID: 1908044372334091969, guid: 2fa8a34d14021ee4fb8249b34abe3534, type: 3}
+    - {fileID: 6813883518310458111, guid: 66d0f4092b675f942a1b6e617476d7d5, type: 3}
+    - {fileID: 4684857368855679782, guid: 61450261c6a57844284d14edcca21a1e, type: 3}
   - groupName: Square
     prefabs:
     - {fileID: 519099820679181832, guid: 0925cc7cd771a304c9fce557d228a5b6, type: 3}
-    - {fileID: 7399533529839668544, guid: 2f53a7fa1dd7d6e45994d202c0d3e9b0, type: 3}
-    - {fileID: 240591359447073246, guid: 178194a69af51494ca44fedd73079c98, type: 3}
+    - {fileID: 240591359447073246, guid: 6e205ff142ba4c948b053021d3f14635, type: 3}
+    - {fileID: 7399533529839668544, guid: 3c95c366995ea2248917c1b72c4da5e1, type: 3}
     - {fileID: 4866762976179861655, guid: 220aedb1785aa9b46ac29f9d22f255a7, type: 3}
   - groupName: Circle
     prefabs:
@@ -1861,7 +1837,7 @@ MonoBehaviour:
     - {fileID: 2881670205427416579, guid: 6b478a02cdf80ac43a678f65439de7b1, type: 3}
   groupSpawnOrders:
   - groupName: Triangle
-    prefabOrder: 0200000003000000
+    prefabOrder: 02000000030000000000000001000000
   - groupName: Square
     prefabOrder: 0100000001000000
   - groupName: Circle
@@ -2006,18 +1982,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: square, Assembly-CSharp
-        m_MethodName: OnButtonClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1427078091}
         m_TargetAssemblyTypeName: ObjCreator, Assembly-CSharp
         m_MethodName: SelectPreviewByIndex
