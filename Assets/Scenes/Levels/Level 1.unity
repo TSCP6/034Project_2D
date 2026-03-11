@@ -1870,6 +1870,20 @@ MonoBehaviour:
   previewColor: {r: 1, g: 1, b: 1, a: 0.4}
   rotateSpeedDegrees: 180
   defaultPos: {x: 0, y: 0}
+  groupUsageConfigs:
+  - groupName: Triangle
+    maxUses: 2
+    remainingUses: 0
+    uiButton: {fileID: 937443369}
+  - groupName: Square
+    maxUses: 2
+    remainingUses: 0
+    uiButton: {fileID: 1634107083}
+  - groupName: Circle
+    maxUses: 2
+    remainingUses: 0
+    uiButton: {fileID: 809182483}
+  disabledButtonColor: {r: 1, g: 1, b: 1, a: 0.68235296}
 --- !u!114 &1427078094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2376,6 +2390,7 @@ MonoBehaviour:
   flashColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   flashSpeed: 5
   isActive: 0
+  initialLinkGroups: []
 --- !u!1 &2064091065
 GameObject:
   m_ObjectHideFlags: 0

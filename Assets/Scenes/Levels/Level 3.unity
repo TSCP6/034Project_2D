@@ -798,7 +798,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &375553583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,8 +817,8 @@ MonoBehaviour:
   windAffectedLayer:
     serializedVersion: 2
     m_Bits: 64
-  exitTime: 5
-  breakTime: 5
+  triggerInterval: 5
+  windDuration: 1
 --- !u!4 &375553584
 Transform:
   m_ObjectHideFlags: 0
@@ -2330,6 +2330,7 @@ MonoBehaviour:
   flashColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   flashSpeed: 5
   isActive: 0
+  initialLinkGroups: []
 --- !u!1 &2064091065
 GameObject:
   m_ObjectHideFlags: 0
