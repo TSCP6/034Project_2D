@@ -79,6 +79,11 @@ public class ObjCreator : MonoBehaviour
         HandlePreviewRotation();
         previewObject.transform.rotation = currentPreviewRotation;
 
+        if (Input.GetMouseButtonDown(1) && !IsPointerOverUi())
+        {
+            Destroy(previewObject);
+        }
+
         if (Input.GetMouseButtonDown(0) && !IsPointerOverUi())
         {
             PlaceFinalObject();
