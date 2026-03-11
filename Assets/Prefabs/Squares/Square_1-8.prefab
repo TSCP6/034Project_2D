@@ -166,7 +166,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240591359447073246}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6508de51043e67440bb519e90abe01cf, type: 3}
   m_Name: 
@@ -175,3 +175,5 @@ MonoBehaviour:
   - sprite: {fileID: 21300000, guid: 71770398b1afd8f49a5fa9a574c0b788, type: 3}
     level: 1
   sprite: {fileID: 0}
+  keepWorldSize: 1
+  syncColliderShape: 1
