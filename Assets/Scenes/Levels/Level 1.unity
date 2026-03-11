@@ -361,7 +361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &197256732
 RectTransform:
   m_ObjectHideFlags: 0
@@ -818,8 +818,8 @@ MonoBehaviour:
   windAffectedLayer:
     serializedVersion: 2
     m_Bits: 64
-  exitTime: 4
-  breakTime: 3
+  triggerInterval: 5
+  windDuration: 1
 --- !u!4 &375553584
 Transform:
   m_ObjectHideFlags: 0
@@ -1277,7 +1277,7 @@ Transform:
   m_GameObject: {fileID: 861157092}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.22, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0.24, y: 0.96, z: 0}
   m_LocalScale: {x: 100, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1863,7 +1863,7 @@ MonoBehaviour:
   - groupName: Triangle
     prefabOrder: 0200000003000000
   - groupName: Square
-    prefabOrder: 000000000000000003000000
+    prefabOrder: 0100000001000000
   - groupName: Circle
     prefabOrder: 0000000000000000
   previewMaterial: {fileID: 0}
@@ -2394,7 +2394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2064091066
 RectTransform:
   m_ObjectHideFlags: 0
