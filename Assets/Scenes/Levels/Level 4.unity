@@ -1124,6 +1124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredTime: 5
   playerTag: Player
+  alphaChange: 0.3
 --- !u!61 &861157094
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2280,7 +2281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1895036568}
-  - component: {fileID: 1895036567}
+  - component: {fileID: 1895036569}
   m_Layer: 0
   m_Name: LinkManager
   m_TagString: Untagged
@@ -2288,31 +2289,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1895036567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895036566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f67fbd3dde6f35d4b9edb6164521c55a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxUses: 99
-  linePrefab: {fileID: 8477454890944285684, guid: 20281d2735a0b984099e6bb136adcb9f, type: 3}
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  maxLength: 5
-  linkButton: {fileID: 2064091067}
-  usageText: {fileID: 0}
-  normalColor: {r: 1, g: 0.63757366, b: 0, a: 1}
-  warningColor: {r: 1, g: 0, b: 0, a: 1}
-  flashColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  flashSpeed: 5
-  isActive: 0
 --- !u!4 &1895036568
 Transform:
   m_ObjectHideFlags: 0
@@ -2328,6 +2304,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1895036569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895036566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79565e57a1bf062448e9cd30eb6e154d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxUses: 5
+  rodPrefab: {fileID: 4431483525928697730, guid: 1681c2a5fcec78f46aaf3d29438bc5d5, type: 3}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  maxLength: 10
+  rodWidth: 0.2
+  linkButton: {fileID: 2064091067}
+  usageText: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  warningColor: {r: 1, g: 0, b: 0, a: 1}
+  flashColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  flashSpeed: 5
+  isActive: 0
 --- !u!1 &2064091065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,9 +2425,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1895036567}
+      - m_Target: {fileID: 1895036569}
         m_TargetAssemblyTypeName: LineLinkManager, Assembly-CSharp
-        m_MethodName: EnableLinkOnce
+        m_MethodName: ToggleLinkMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
