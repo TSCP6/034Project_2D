@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI; // ÐÂÔö£ºUIÏà¹ØÃüÃû¿Õ¼ä
+using UnityEngine.UI; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½
 
 [System.Serializable]
 public class PrefabGroup
@@ -17,14 +17,14 @@ public class GroupSpawnOrder
     public List<int> prefabOrder = new List<int>();
 }
 
-// ÐÂÔö£º·Ö×é´ÎÊýÅäÖÃ£¨ÐòÁÐ»¯£¬Inspector¿É±à¼­£©
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½Inspectorï¿½É±à¼­ï¿½ï¿½
 [System.Serializable]
 public class GroupUsageConfig
 {
-    public string groupName; // ¶ÔÓ¦PrefabGroupµÄÃû³Æ
-    public int maxUses = 5;  // ¸Ã·Ö×é×î´óÊ¹ÓÃ´ÎÊý
-    public int remainingUses; // Ê£Óà´ÎÊý
-    public Button uiButton;  // ¸Ã·Ö×é¶ÔÓ¦µÄUI°´Å¥£¨ÓÃÓÚ±ä»Ò£©
+    public string groupName; // ï¿½ï¿½Ó¦PrefabGroupï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public int maxUses = 5;  // ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã´ï¿½ï¿½ï¿½
+    public int remainingUses; // Ê£ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Button uiButton;  // ï¿½Ã·ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½UIï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½Ò£ï¿½
 }
 
 public class ObjCreator : MonoBehaviour
@@ -32,15 +32,15 @@ public class ObjCreator : MonoBehaviour
     public List<PrefabGroup> prefabGroups = new List<PrefabGroup>();
     public List<GroupSpawnOrder> groupSpawnOrders = new List<GroupSpawnOrder>();
 
-    [Header("Ô¤ÀÀÉèÖÃ")]
+    [Header("Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public Material previewMaterial;
     public Color previewColor = new Color(1f, 1f, 1f, 0.4f);
     public float rotateSpeedDegrees = 180f;
     public Vector2 defaultPos;
 
-    [Header("´ÎÊýÏÞÖÆÉèÖÃ¡¾ÐÂÔö¡¿")]
-    public List<GroupUsageConfig> groupUsageConfigs = new List<GroupUsageConfig>(); // ·Ö×é´ÎÊýÅäÖÃ
-    public Color disabledButtonColor = new Color(0.5f, 0.5f, 0.5f, 0.5f); // °´Å¥±ä»ÒºóµÄÑÕÉ«
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    public List<GroupUsageConfig> groupUsageConfigs = new List<GroupUsageConfig>(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Color disabledButtonColor = new Color(1f, 1f, 1f, 0.7f); // ï¿½ï¿½Å¥ï¿½ï¿½Òºï¿½ï¿½ï¿½ï¿½É«
 
     private GameObject previewObject;
     private GameObject selectedPrefab;
@@ -55,8 +55,8 @@ public class ObjCreator : MonoBehaviour
     {
         mainCam = Camera.main;
         InitOrderIndices();
-        InitGroupUsage(); // ³õÊ¼»¯·Ö×é´ÎÊý
-        UpdateAllButtonStates(); // ³õÊ¼»¯°´Å¥×´Ì¬
+        InitGroupUsage(); // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        UpdateAllButtonStates(); // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Å¥×´Ì¬
     }
 
     void Update()
@@ -88,10 +88,10 @@ public class ObjCreator : MonoBehaviour
 
     public void SelectPreviewByIndex(int groupIndex)
     {
-        // ÐÂÔö£º¼ì²é´ÎÊý£¬´ÎÊýÎª0Ö±½Ó·µ»Ø
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª0Ö±ï¿½Ó·ï¿½ï¿½ï¿½
         if (!CanUseGroup(groupIndex))
         {
-            Debug.LogWarning($"·Ö×é{groupIndex}´ÎÊýÒÑÓÃÍê£¬ÎÞ·¨Éú³ÉÔ¤ÀÀ£¡");
+            Debug.LogWarning($"ï¿½ï¿½ï¿½ï¿½{groupIndex}ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê£¬ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½");
             return;
         }
 
@@ -149,27 +149,27 @@ public class ObjCreator : MonoBehaviour
         waitMouseReleaseAfterButton = true;
     }
 
-    // ÐÂÔö£º³õÊ¼»¯·Ö×é´ÎÊý
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void InitGroupUsage()
     {
         foreach (var config in groupUsageConfigs)
         {
-            config.remainingUses = config.maxUses; // Ê£Óà´ÎÊý³õÊ¼»¯Îª×î´ó´ÎÊý
+            config.remainingUses = config.maxUses; // Ê£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
     }
 
-    // ÐÂÔö£º¼ì²é·Ö×éÊÇ·ñ¿ÉÊ¹ÓÃ£¨´ÎÊý>0£©
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ê¹ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½>0ï¿½ï¿½
     private bool CanUseGroup(int groupIndex)
     {
         if (groupIndex < 0 || groupIndex >= groupUsageConfigs.Count)
         {
-            return true; // Î´ÅäÖÃ´ÎÊýµÄ·Ö×éÄ¬ÈÏ¿ÉÊ¹ÓÃ
+            return true; // Î´ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Ä¬ï¿½Ï¿ï¿½Ê¹ï¿½ï¿½
         }
         var config = groupUsageConfigs[groupIndex];
         return config.remainingUses > 0;
     }
 
-    // ÐÂÔö£º¿Û¼õ·Ö×é´ÎÊý²¢¸üÐÂ°´Å¥×´Ì¬
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½Å¥×´Ì¬
     private void ConsumeGroupUsage(int groupIndex)
     {
         if (groupIndex < 0 || groupIndex >= groupUsageConfigs.Count)
@@ -180,12 +180,12 @@ public class ObjCreator : MonoBehaviour
         if (config.remainingUses > 0)
         {
             config.remainingUses--;
-            UpdateButtonState(groupIndex); // ¸üÐÂ¶ÔÓ¦°´Å¥×´Ì¬
-            Debug.Log($"·Ö×é{groupIndex}Ê£Óà´ÎÊý£º{config.remainingUses}");
+            UpdateButtonState(groupIndex); // ï¿½ï¿½ï¿½Â¶ï¿½Ó¦ï¿½ï¿½Å¥×´Ì¬
+            Debug.Log($"ï¿½ï¿½ï¿½ï¿½{groupIndex}Ê£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½{config.remainingUses}");
         }
     }
 
-    // ÐÂÔö£º¸üÐÂµ¥¸ö·Ö×éµÄ°´Å¥×´Ì¬£¨±ä»Ò/½ûÓÃ£©
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä°ï¿½Å¥×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½Ã£ï¿½
     private void UpdateButtonState(int groupIndex)
     {
         if (groupIndex < 0 || groupIndex >= groupUsageConfigs.Count)
@@ -198,7 +198,7 @@ public class ObjCreator : MonoBehaviour
             return;
         }
 
-        // ´ÎÊýÎª0Ê±£º°´Å¥²»¿É½»»¥ + ±ä»Ò
+        // ï¿½ï¿½ï¿½ï¿½Îª0Ê±ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½
         if (config.remainingUses <= 0)
         {
             config.uiButton.interactable = false;
@@ -207,7 +207,7 @@ public class ObjCreator : MonoBehaviour
             {
                 btnImage.color = disabledButtonColor;
             }
-            // Èç¹û°´Å¥ÓÐÎÄ×Ö£¬Ò²¿ÉÒÔÍ¬²½±ä»Ò
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½Ò²ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½
             Text btnText = config.uiButton.GetComponentInChildren<Text>();
             if (btnText != null)
             {
@@ -216,22 +216,22 @@ public class ObjCreator : MonoBehaviour
         }
         else
         {
-            // ´ÎÊý>0Ê±£º»Ö¸´¿É½»»¥ + »Ö¸´Ô­ÑÕÉ«
+            // ï¿½ï¿½ï¿½ï¿½>0Ê±ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½É½ï¿½ï¿½ï¿½ + ï¿½Ö¸ï¿½Ô­ï¿½ï¿½É«
             config.uiButton.interactable = true;
             Image btnImage = config.uiButton.GetComponent<Image>();
             if (btnImage != null)
             {
-                btnImage.color = Color.white; // ¿É¸ÄÎªÄ¬ÈÏÑÕÉ«±äÁ¿
+                btnImage.color = Color.white; // ï¿½É¸ï¿½ÎªÄ¬ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½
             }
             Text btnText = config.uiButton.GetComponentInChildren<Text>();
             if (btnText != null)
             {
-                btnText.color = Color.black; // ¿É¸ÄÎªÄ¬ÈÏÎÄ×ÖÑÕÉ«
+                btnText.color = Color.black; // ï¿½É¸ï¿½ÎªÄ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
             }
         }
     }
 
-    // ÐÂÔö£º¸üÐÂËùÓÐ·Ö×éµÄ°´Å¥×´Ì¬
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½Ä°ï¿½Å¥×´Ì¬
     private void UpdateAllButtonStates()
     {
         for (int i = 0; i < groupUsageConfigs.Count; i++)
@@ -376,7 +376,7 @@ public class ObjCreator : MonoBehaviour
         Quaternion finalRot = previewObject.transform.rotation;
         Instantiate(selectedPrefab, finalPos, finalRot);
 
-        // ÐÂÔö£º·ÅÖÃÎïÌåºó¿Û¼õ¶ÔÓ¦·Ö×é´ÎÊý
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¼ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (pendingGroupIndex >= 0)
         {
             ConsumeGroupUsage(pendingGroupIndex);
@@ -413,11 +413,11 @@ public class ObjCreator : MonoBehaviour
         return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 
-    // ÐÂÔö£ºÖØÖÃËùÓÐ·Ö×é´ÎÊýºÍ°´Å¥×´Ì¬£¨¿ÉÑ¡£¬±ÈÈçÖØÆô³¡¾°Ê±µ÷ÓÃ£©
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½Å¥×´Ì¬ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ã£ï¿½
     public void ResetAllGroupUsage()
     {
         InitGroupUsage();
         UpdateAllButtonStates();
-        Debug.Log("ËùÓÐ·Ö×é´ÎÊýÒÑÖØÖÃ£¬°´Å¥×´Ì¬ÒÑ»Ö¸´£¡");
+        Debug.Log("ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½Å¥×´Ì¬ï¿½Ñ»Ö¸ï¿½ï¿½ï¿½");
     }
 }
