@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class AutoSceneSwitch : MonoBehaviour
 {
-
-
     [Header("Core Settings")]
     public float switchDelay = 30f; // Countdown for auto switch (seconds), default 30s
     public string nextSceneName; // Name of the next scene (must match Build Settings)
@@ -42,10 +40,28 @@ public class AutoSceneSwitch : MonoBehaviour
     /// </summary>
     public void StartTimer()
     {
+        StartTimer(switchDelay);
+    }
+
+    /// <summary>
+    /// Start countdown with a custom delay.
+    /// </summary>
+    public void StartTimer(float delay)
+    {
+        remainingTime = Mathf.Max(0, delay);
+        UpdateCountdownUI();
+
         if (timerCoroutine != null)
         {
             StopCoroutine(timerCoroutine);
         }
+
+        if (remainingTime <= 0)
+        {
+            SwitchToNextScene();
+            return;
+        }
+
         timerCoroutine = StartCoroutine(CountdownCoroutine());
     }
 

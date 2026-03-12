@@ -30,13 +30,23 @@ public class RandomBlockDrop : MonoBehaviour
     public float startDelay = 1f; // Delay before dropping starts after game launch
     public float gravityScale = 0.1f;
 
+    [Header("Completion Settings")]
+    public bool stopAfterAllPrefabsSpawned = true; // Stop dropping after all configured prefabs are spawned once
+    public bool shuffleFiniteSpawnOrder = true; // Shuffle the finite spawn queue
+    public AutoSceneSwitch autoSceneSwitch; // Trigger scene switch after spawning completes
+    public float delayBeforeSceneSwitch = 3f; // Delay before switching after all blocks are spawned
+    public bool triggerSceneSwitchWhenFinished = true;
+
     // Internal variables
     private List<GameObject> activeBlocks = new List<GameObject>();
     private readonly List<GameObject> orderedDropPrefabs = new List<GameObject>();
     private readonly List<List<GameObject>> groupedDropPrefabs = new List<List<GameObject>>();
     private readonly List<int> groupedNextIndices = new List<int>();
+    private readonly List<GameObject> finiteSpawnQueue = new List<GameObject>();
     private Coroutine dropCoroutine;
     private int nextOrderedPrefabIndex;
+    private int nextFiniteSpawnIndex;
+    private bool hasFinishedSpawning;
 
     void Start()
     {
@@ -59,8 +69,88 @@ public class RandomBlockDrop : MonoBehaviour
             }
         }
 
+        if (stopAfterAllPrefabsSpawned && !BuildFiniteSpawnQueue())
+        {
+            Debug.LogError("Failed to build finite spawn queue. Check drop source configuration.");
+            return;
+        }
+
+        if (triggerSceneSwitchWhenFinished && autoSceneSwitch != null)
+        {
+            autoSceneSwitch.PauseTimer();
+        }
+
         // Start drop coroutine
         dropCoroutine = StartCoroutine(DropLoopCoroutine());
+    }
+
+    private bool BuildFiniteSpawnQueue()
+    {
+        finiteSpawnQueue.Clear();
+        nextFiniteSpawnIndex = 0;
+
+        if (useObjCreatorData)
+        {
+            if (sourceGroupIndex < 0 && randomGroupEachSpawn && groupedDropPrefabs.Count > 0)
+            {
+                List<int> tempIndices = new List<int>(groupedDropPrefabs.Count);
+                for (int i = 0; i < groupedDropPrefabs.Count; i++)
+                {
+                    tempIndices.Add(0);
+                }
+
+                while (true)
+                {
+                    List<int> availableGroups = new List<int>();
+                    for (int i = 0; i < groupedDropPrefabs.Count; i++)
+                    {
+                        List<GameObject> groupSequence = groupedDropPrefabs[i];
+                        if (groupSequence != null && tempIndices[i] < groupSequence.Count)
+                        {
+                            availableGroups.Add(i);
+                        }
+                    }
+
+                    if (availableGroups.Count == 0)
+                    {
+                        break;
+                    }
+
+                    int randomGroup = availableGroups[Random.Range(0, availableGroups.Count)];
+                    finiteSpawnQueue.Add(groupedDropPrefabs[randomGroup][tempIndices[randomGroup]]);
+                    tempIndices[randomGroup]++;
+                }
+            }
+            else
+            {
+                finiteSpawnQueue.AddRange(orderedDropPrefabs);
+                if (shuffleFiniteSpawnOrder)
+                {
+                    ShuffleQueue(finiteSpawnQueue);
+                }
+            }
+        }
+        else
+        {
+            finiteSpawnQueue.AddRange(dropPrefabs);
+            if (shuffleFiniteSpawnOrder)
+            {
+                ShuffleQueue(finiteSpawnQueue);
+            }
+        }
+
+        return finiteSpawnQueue.Count > 0;
+    }
+
+    private void ShuffleQueue(List<GameObject> queue)
+    {
+        for (int i = queue.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            GameObject temp = queue[i];
+            queue[i] = queue[randomIndex];
+            queue[randomIndex] = temp;
+        }
     }
 
     private bool BuildOrderedPrefabsFromObjCreator()
@@ -129,6 +219,18 @@ public class RandomBlockDrop : MonoBehaviour
 
     private GameObject GetNextPrefab()
     {
+        if (stopAfterAllPrefabsSpawned)
+        {
+            if (nextFiniteSpawnIndex >= finiteSpawnQueue.Count)
+            {
+                return null;
+            }
+
+            GameObject queuedPrefab = finiteSpawnQueue[nextFiniteSpawnIndex];
+            nextFiniteSpawnIndex++;
+            return queuedPrefab;
+        }
+
         if (useObjCreatorData)
         {
             if (sourceGroupIndex < 0 && randomGroupEachSpawn && groupedDropPrefabs.Count > 0)
@@ -183,6 +285,12 @@ public class RandomBlockDrop : MonoBehaviour
 
         while (isDropLoop)
         {
+            if (stopAfterAllPrefabsSpawned && nextFiniteSpawnIndex >= finiteSpawnQueue.Count)
+            {
+                HandleSpawnSequenceFinished();
+                yield break;
+            }
+
             // Check max active blocks, wait if exceeded
             if (activeBlocks.Count >= maxActiveBlocks)
             {
@@ -196,6 +304,31 @@ public class RandomBlockDrop : MonoBehaviour
 
             // Spawn a block
             SpawnOneBlock();
+
+            if (stopAfterAllPrefabsSpawned && nextFiniteSpawnIndex >= finiteSpawnQueue.Count)
+            {
+                HandleSpawnSequenceFinished();
+                yield break;
+            }
+        }
+    }
+
+    private void HandleSpawnSequenceFinished()
+    {
+        if (hasFinishedSpawning)
+        {
+            return;
+        }
+
+        hasFinishedSpawning = true;
+        isDropLoop = false;
+        dropCoroutine = null;
+
+        Debug.Log("All configured blocks have finished spawning.");
+
+        if (triggerSceneSwitchWhenFinished && autoSceneSwitch != null)
+        {
+            autoSceneSwitch.StartTimer(delayBeforeSceneSwitch);
         }
     }
 

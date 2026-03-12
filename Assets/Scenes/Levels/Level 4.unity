@@ -1745,6 +1745,11 @@ MonoBehaviour:
   isDropLoop: 1
   startDelay: 1
   gravityScale: 0.1
+  stopAfterAllPrefabsSpawned: 1
+  shuffleFiniteSpawnOrder: 1
+  autoSceneSwitch: {fileID: 1444407029}
+  delayBeforeSceneSwitch: 15
+  triggerSceneSwitchWhenFinished: 1
 --- !u!114 &1444407029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1757,7 +1762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6efa7496aa762849bc6be64c3400780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  switchDelay: 30
+  switchDelay: 180
   nextSceneName: Level 5
   nextSceneIndex: 5
   countdownText: {fileID: 0}
