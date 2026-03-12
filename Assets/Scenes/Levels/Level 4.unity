@@ -1491,15 +1491,15 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0}
   groupUsageConfigs:
   - groupName: Triangle
-    maxUses: 3
+    maxUses: 4
     remainingUses: 0
     uiButton: {fileID: 1400852187}
   - groupName: Square
-    maxUses: 5
+    maxUses: 8
     remainingUses: 0
     uiButton: {fileID: 1257463141}
   - groupName: Circle
-    maxUses: 4
+    maxUses: 8
     remainingUses: 0
     uiButton: {fileID: 964538240}
   disabledButtonColor: {r: 1, g: 1, b: 1, a: 0.69803923}
@@ -1630,7 +1630,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449159908}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47fffee5e04faa04ebb784d2206c7512, type: 3}
   m_Name: 
@@ -2740,7 +2740,7 @@ Transform:
   m_GameObject: {fileID: 2144385333}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.22, y: -4.99, z: 0}
+  m_LocalPosition: {x: 0.22, y: -5, z: 0}
   m_LocalScale: {x: 100, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

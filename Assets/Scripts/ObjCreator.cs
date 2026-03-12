@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI; // UI references
 
 [System.Serializable]
@@ -50,9 +52,11 @@ public class ObjCreator : MonoBehaviour
     private List<int> nextOrderIndices = new List<int>();
     private int pendingGroupIndex = -1;
     private Quaternion currentPreviewRotation = Quaternion.identity;
+    private int index;
 
     void Start()
     {
+        index = SceneManager.GetActiveScene().buildIndex;
         mainCam = Camera.main;
         InitOrderIndices();
         InitGroupUsage();
@@ -155,16 +159,6 @@ public class ObjCreator : MonoBehaviour
         }
     }
 
-    private bool CanUseGroup(int groupIndex)
-    {
-        if (groupIndex < 0 || groupIndex >= groupUsageConfigs.Count)
-        {
-            return true;
-        }
-        var config = groupUsageConfigs[groupIndex];
-        return config.remainingUses > 0;
-    }
-
     private void ConsumeGroupUsage(int groupIndex)
     {
         if (groupIndex < 0 || groupIndex >= groupUsageConfigs.Count)
@@ -265,6 +259,11 @@ public class ObjCreator : MonoBehaviour
             startPos = defaultPos;
         }
 
+        if (index == 5)
+        {
+            Debug.Log("it's level 5");
+            currentPreviewRotation = Quaternion.Euler(0, 0, 180f);
+        }
         previewObject = Instantiate(selectedPrefab, startPos, currentPreviewRotation);
         previewObject.name = selectedPrefab.name + "_Preview";
 
@@ -363,6 +362,11 @@ public class ObjCreator : MonoBehaviour
 
         Vector3 finalPos = previewObject.transform.position;
         Quaternion finalRot = previewObject.transform.rotation;
+        Rigidbody2D rb = selectedPrefab.GetComponent<Rigidbody2D>();
+        if (index == 5)
+        {
+            rb.gravityScale = -1f;
+        }
         Instantiate(selectedPrefab, finalPos, finalRot);
         if (pendingGroupIndex >= 0)
         {
