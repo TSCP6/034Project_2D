@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjBase : MonoBehaviour
 {
-    public LayerMask controllableLayer;
+    // public LayerMask controllableLayer;
 
     protected Camera mainCam;
 
@@ -21,50 +22,52 @@ public class ObjBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        // Move();
+        if (gameObject.transform.position.magnitude > 100f)
+            Destroy(gameObject);
     }
 
     // Known issue: dragging too fast may pass through walls
-    void Move()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!isDragging)
-            {
-                Vector3 mouseWorld = GetMouseWorldPos();
-                Collider2D hit = Physics2D.OverlapPoint(mouseWorld, controllableLayer);
+    // void Move()
+    // {
+    //     if (Input.GetMouseButtonDown(0))
+    //     {
+    //         if (!isDragging)
+    //         {
+    //             Vector3 mouseWorld = GetMouseWorldPos();
+    //             Collider2D hit = Physics2D.OverlapPoint(mouseWorld, controllableLayer);
 
-                if (hit != null && hit.TryGetComponent(out Rigidbody2D rb))
-                {
-                    draggingRb = rb;
-                    isDragging = true;
-                    dragOffset = draggingRb.transform.position - mouseWorld;
-                    Debug.Log("dragging");
-                }
-            }
-            else
-            {
-                isDragging = false;
-                draggingRb = null;
-                Debug.Log("released");
-            }
-        }
-    }
+    //             if (hit != null && hit.TryGetComponent(out Rigidbody2D rb))
+    //             {
+    //                 draggingRb = rb;
+    //                 isDragging = true;
+    //                 dragOffset = draggingRb.transform.position - mouseWorld;
+    //                 Debug.Log("dragging");
+    //             }
+    //         }
+    //         else
+    //         {
+    //             isDragging = false;
+    //             draggingRb = null;
+    //             Debug.Log("released");
+    //         }
+    //     }
+    // }
 
-    void FixedUpdate()
-    {
-        if (isDragging && draggingRb != null)
-        {
-            Vector3 mouseWorld = GetMouseWorldPos();
-            Vector2 targetPos = mouseWorld + dragOffset;
-            draggingRb.MovePosition(targetPos);
-        }
-    }
+    // void FixedUpdate()
+    // {
+    //     if (isDragging && draggingRb != null)
+    //     {
+    //         Vector3 mouseWorld = GetMouseWorldPos();
+    //         Vector2 targetPos = mouseWorld + dragOffset;
+    //         draggingRb.MovePosition(targetPos);
+    //     }
+    // }
 
-    private Vector3 GetMouseWorldPos()
-    {
-        Vector3 p = Input.mousePosition;
-        p.z = -mainCam.transform.position.z;
-        return mainCam.ScreenToWorldPoint(p);
-    }
+    // private Vector3 GetMouseWorldPos()
+    // {
+    //     Vector3 p = Input.mousePosition;
+    //     p.z = -mainCam.transform.position.z;
+    //     return mainCam.ScreenToWorldPoint(p);
+    // }
 }

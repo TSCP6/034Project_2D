@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -7874832436202747055}
   - component: {fileID: -7326802750734451262}
   - component: {fileID: 1558210329408214461}
+  - component: {fileID: -8627808402147275178}
   m_Layer: 6
   m_Name: Triangle_2-2_EW
   m_TagString: Player
@@ -180,3 +181,15 @@ MonoBehaviour:
   sprite: {fileID: 0}
   keepWorldSize: 1
   syncColliderShape: 1
+--- !u!114 &-8627808402147275178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7455935044586011102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a3fd3c3439f9840b444cb1da0fcc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

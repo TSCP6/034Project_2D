@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -5248022131569400361}
   - component: {fileID: -2247244784575325157}
   - component: {fileID: -4260339861664191984}
+  - component: {fileID: -7794887373211718137}
   m_Layer: 6
   m_Name: Square_1-6
   m_TagString: Player
@@ -177,3 +178,15 @@ MonoBehaviour:
   sprite: {fileID: 0}
   keepWorldSize: 1
   syncColliderShape: 1
+--- !u!114 &-7794887373211718137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240591359447073246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1a3fd3c3439f9840b444cb1da0fcc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
