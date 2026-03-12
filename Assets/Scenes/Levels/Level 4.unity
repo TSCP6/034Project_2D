@@ -1571,9 +1571,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3592ae01b9936746868f7ba86014420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPrefabs:
-  - {fileID: 519099820679181832, guid: 0925cc7cd771a304c9fce557d228a5b6, type: 3}
-  - {fileID: 240591359447073246, guid: 6e205ff142ba4c948b053021d3f14635, type: 3}
+  objCreator: {fileID: 1444407023}
+  useObjCreatorData: 1
+  sourceGroupIndex: -1
+  randomGroupEachSpawn: 1
+  dropPrefabs: []
   dropAreaX: {x: -5, y: 5}
   dropY: 8
   minDropInterval: 0.5

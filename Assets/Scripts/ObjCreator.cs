@@ -261,7 +261,6 @@ public class ObjCreator : MonoBehaviour
 
         if (index == 5)
         {
-            Debug.Log("it's level 5");
             currentPreviewRotation = Quaternion.Euler(0, 0, 180f);
         }
         previewObject = Instantiate(selectedPrefab, startPos, currentPreviewRotation);
@@ -366,6 +365,10 @@ public class ObjCreator : MonoBehaviour
         if (index == 5)
         {
             rb.gravityScale = -1f;
+        }
+        else
+        {
+            rb.gravityScale = 1f;
         }
         Instantiate(selectedPrefab, finalPos, finalRot);
         if (pendingGroupIndex >= 0)
