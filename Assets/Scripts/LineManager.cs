@@ -109,10 +109,22 @@ public class LineLinkManager : MonoBehaviour
 
     public void ToggleLinkMode()
     {
-        if (remainingUses <= 0) return;
+        // Click once to enter multi-use mode, click again to cancel.
+        if (isActive)
+        {
+            DeactivateLinkMode();
+            return;
+        }
 
-        isActive = !isActive;
-        if (!isActive && isLinking) CancelLinking();
+        if (remainingUses <= 0)
+        {
+            return;
+        }
+
+        isActive = true;
+        isLinking = false;
+        firstBody = null;
+        UpdateUI();
     }
 
     void Update()
@@ -192,7 +204,8 @@ public class LineLinkManager : MonoBehaviour
 
         remainingUses--;
         Destroy(previewRod);
-        FinishAction();
+        previewRod = null;
+        FinishCurrentLinkAttempt();
     }
 
     void CreateHinge(GameObject rod, Rigidbody2D connectedTarget, Vector2 anchorOnRod)
@@ -207,15 +220,41 @@ public class LineLinkManager : MonoBehaviour
     void CancelLinking()
     {
         if (previewRod != null) Destroy(previewRod);
-        FinishAction();
+        previewRod = null;
+        FinishCurrentLinkAttempt();
     }
 
-    void FinishAction()
+    void FinishCurrentLinkAttempt()
+    {
+        isLinking = false;
+        firstBody = null;
+
+        if (remainingUses <= 0)
+        {
+            DeactivateLinkMode();
+            return;
+        }
+
+        UpdateUI();
+    }
+
+    void DeactivateLinkMode()
     {
         isActive = false;
         isLinking = false;
         firstBody = null;
-        if (buttonImage != null) buttonImage.color = originalBtnColor;
+
+        if (previewRod != null)
+        {
+            Destroy(previewRod);
+            previewRod = null;
+        }
+
+        if (buttonImage != null)
+        {
+            buttonImage.color = originalBtnColor;
+        }
+
         UpdateUI();
     }
 
@@ -236,6 +275,6 @@ public class LineLinkManager : MonoBehaviour
     void UpdateUI()
     {
         if (usageText != null) usageText.text = "Uses: " + remainingUses;
-        if (linkButton != null) linkButton.interactable = remainingUses > 0;
+        if (linkButton != null) linkButton.interactable = remainingUses > 0 || isActive;
     }
 }

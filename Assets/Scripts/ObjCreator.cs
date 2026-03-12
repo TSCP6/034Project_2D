@@ -32,6 +32,7 @@ public class ObjCreator : MonoBehaviour
 {
     public List<PrefabGroup> prefabGroups = new List<PrefabGroup>();
     public List<GroupSpawnOrder> groupSpawnOrders = new List<GroupSpawnOrder>();
+    public bool AllObjectsCreated => allObjectsCreated;
 
     [Header("Preview Settings")]
     public Material previewMaterial;
@@ -52,6 +53,7 @@ public class ObjCreator : MonoBehaviour
     private int pendingGroupIndex = -1;
     private Quaternion currentPreviewRotation = Quaternion.identity;
     private int index;
+    private bool allObjectsCreated;
 
     void Start()
     {
@@ -60,6 +62,7 @@ public class ObjCreator : MonoBehaviour
         InitOrderIndices();
         InitGroupUsage();
         UpdateAllButtonStates();
+        RefreshCreationState();
     }
 
     void Update()
@@ -379,6 +382,8 @@ public class ObjCreator : MonoBehaviour
         {
             nextOrderIndices[pendingGroupIndex]++;
         }
+
+        RefreshCreationState();
         pendingGroupIndex = -1;
 
         Destroy(previewObject);
@@ -406,9 +411,48 @@ public class ObjCreator : MonoBehaviour
         return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 
+    public bool AreAllObjectsCreated()
+    {
+        return allObjectsCreated;
+    }
+
+    private void RefreshCreationState()
+    {
+        EnsureOrderIndicesSize();
+
+        int maxGroupCount = Mathf.Min(prefabGroups.Count, groupSpawnOrders.Count);
+        if (maxGroupCount <= 0)
+        {
+            allObjectsCreated = false;
+            return;
+        }
+
+        bool hasAnyOrder = false;
+
+        for (int i = 0; i < maxGroupCount; i++)
+        {
+            GroupSpawnOrder order = groupSpawnOrders[i];
+            if (order == null || order.prefabOrder == null || order.prefabOrder.Count == 0)
+            {
+                continue;
+            }
+
+            hasAnyOrder = true;
+
+            if (nextOrderIndices[i] < order.prefabOrder.Count)
+            {
+                allObjectsCreated = false;
+                return;
+            }
+        }
+
+        allObjectsCreated = hasAnyOrder;
+    }
+
     public void ResetAllGroupUsage()
     {
         InitGroupUsage();
         UpdateAllButtonStates();
+        RefreshCreationState();
     }
 }
