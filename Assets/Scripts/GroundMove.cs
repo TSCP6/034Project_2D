@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class GroundMove : MonoBehaviour
 {
     [Header("Vertical Move Settings")]
-    public float amplitude = 1f; // Max distance from start position
-    public float period = 2f; // Seconds per full cycle
+    public float amplitude = 0.2f; // Max distance from start position
+    public float period = 1f; // Seconds per full cycle
     [Range(0f, 1f)]
     public float phaseOffset = 0f; // 0-1 offset in cycle at start
     public bool useLocalPosition = true;
@@ -25,9 +26,10 @@ public class GroundMove : MonoBehaviour
 
         float omega = (2f * Mathf.PI) / period;
         float t = Time.time + phaseOffset * period;
+        float xOffset = MathF.Cos(omega * t) * amplitude;
         float yOffset = Mathf.Sin(omega * t) * amplitude;
 
-        Vector3 target = startPosition + Vector3.up * yOffset;
+        Vector3 target = startPosition + Vector3.up * yOffset + Vector3.right * xOffset;
         if (useLocalPosition)
         {
             transform.localPosition = target;
