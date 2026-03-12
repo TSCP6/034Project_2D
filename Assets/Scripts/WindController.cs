@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 public class WindController : MonoBehaviour
 {
-    [Header("风力设置")]
-    public Vector2 windDirection = Vector2.right; // 初始风向
-    public float windForce = 5f; // 风力大小
-    public float maxSpeed = 6f; // 受风力物体最大速度
-    public LayerMask windAffectedLayer; // 受风力影响的层级
+    [Header("Wind Settings")]
+    public Vector2 windDirection = Vector2.right; // Initial wind direction
+    public float windForce = 5f; // Wind force strength
+    public float maxSpeed = 6f; // Max speed for affected objects
+    public LayerMask windAffectedLayer; // Layer affected by wind
 
-    [Header("触发间隔设置")]
-    public float triggerInterval = 5f; // 每隔X秒触发一次风力（核心参数）
-    public float windDuration = 1f; // 每次触发后风力持续时长（可自定义，比如1秒）
+    [Header("Trigger Interval Settings")]
+    public float triggerInterval = 5f; // Wind triggers every X seconds (core parameter)
+    public float windDuration = 1f; // Wind duration after each trigger (customizable, e.g. 1s)
 
-    private float timer; // 全局计时器
-    private bool isWindActive; // 当前是否处于风力生效期
+    private float timer;
+    private bool isWindActive;
     private readonly HashSet<Rigidbody2D> bodiesInWind = new HashSet<Rigidbody2D>();
 
     void Reset()
     {
-        // 重置时自动设置碰撞体为触发器
+        // Automatically set collider as trigger on reset
         var col = GetComponent<Collider2D>();
         if (col != null)
         {
@@ -37,51 +37,51 @@ public class WindController : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        // 逻辑：间隔时间到 → 触发风力 → 持续指定时长后关闭 → 循环
+        // Logic: interval reached → trigger wind → wind lasts for set duration → repeat
         if (!isWindActive)
         {
-            // 间隔时间到，触发风力
+            // Interval reached, trigger wind
             if (timer >= triggerInterval)
             {
-                windDirection = -windDirection; // 每次触发前反转风向
-                isWindActive = true; // 开启风力
-                timer = 0f; // 重置计时器，开始计时风力持续时长
-                Debug.Log($"风力触发！当前风向：{windDirection}");
+                windDirection = -windDirection; // Reverse wind direction before each trigger
+                isWindActive = true; // Activate wind
+                timer = 0f; // Reset timer, start wind duration countdown
+                Debug.Log($"Wind triggered! Current direction: {windDirection}");
             }
         }
         else
         {
-            // 风力持续时长到，关闭风力
+            // Wind duration reached, deactivate wind
             if (timer >= windDuration)
             {
-                isWindActive = false; // 关闭风力
-                timer = 0f; // 重置计时器，开始计时触发间隔
-                Debug.Log("风力关闭，进入等待间隔");
+                isWindActive = false; // Deactivate wind
+                timer = 0f; // Reset timer, start interval countdown
+                Debug.Log("Wind deactivated, waiting interval");
             }
         }
     }
 
     void FixedUpdate()
     {
-        // 仅在风力生效期、且有受影响物体时施加风力
+        // Only apply wind force when wind is active and affected objects exist
         if (!isWindActive || bodiesInWind.Count == 0) return;
 
         Vector2 force = windDirection.normalized * windForce;
 
         foreach (var rb in bodiesInWind)
         {
-            if (rb == null) continue; // 防止物体被销毁导致空引用
+            if (rb == null) continue; // Prevent null reference if object destroyed
 
-            rb.WakeUp(); // 唤醒休眠的刚体
-            rb.AddForce(force, ForceMode2D.Force); // 施加持续力
+            rb.WakeUp(); // Wake up sleeping rigidbody
+            rb.AddForce(force, ForceMode2D.Force); // Apply continuous force
 
-            // 限制最大速度，避免物体无限加速
+            // Limit max speed to prevent infinite acceleration
             if (rb.velocity.magnitude > maxSpeed)
                 rb.velocity = rb.velocity.normalized * maxSpeed;
         }
     }
 
-    #region 触发器检测：管理受风力影响的刚体
+    #region Trigger Detection: Manage wind-affected rigidbodies
     void OnTriggerEnter2D(Collider2D collision)
     {
         AddRigidbodyIfValid(collision);
@@ -89,7 +89,7 @@ public class WindController : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        // 防止运行时层级/刚体组件变化导致漏检
+        // Prevent missing detection due to runtime layer/rigidbody changes
         AddRigidbodyIfValid(collision);
     }
 
@@ -101,27 +101,26 @@ public class WindController : MonoBehaviour
         }
     }
 
-    // 封装校验逻辑：层级匹配 + 有刚体组件
     private void AddRigidbodyIfValid(Collider2D collision)
     {
-        // 检查层级是否匹配
+        // Check if layer matches
         if ((windAffectedLayer.value & (1 << collision.gameObject.layer)) == 0) return;
-        // 检查是否有刚体组件
+        // Check if has Rigidbody2D component
         if (!collision.TryGetComponent<Rigidbody2D>(out var rb)) return;
 
         bodiesInWind.Add(rb);
     }
     #endregion
 
-    #region 生命周期：清理数据
+    #region Lifecycle: Clean up data
     void OnDisable()
     {
-        bodiesInWind.Clear(); // 组件禁用时清空列表，防止内存泄漏
+        bodiesInWind.Clear(); // Clear list when component disabled to prevent memory leak
     }
 
     void OnDestroy()
     {
-        bodiesInWind.Clear(); // 组件销毁时清空列表
+        bodiesInWind.Clear(); // Clear list when component destroyed
     }
     #endregion
 }

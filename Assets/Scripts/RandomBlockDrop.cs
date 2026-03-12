@@ -3,108 +3,110 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// 天上随机掉落方块管理器
-/// 挂载到任意空物体（比如DropManager）即可
+/// Random block drop manager from above.
+/// Attach to any empty GameObject (e.g. DropManager).
 /// </summary>
 public class RandomBlockDrop : MonoBehaviour
 {
-    [Header("掉落基础设置")]
-    public List<GameObject> dropPrefabs; // 要掉落的方块预制体列表（支持多个类型）
-    public Vector2 dropAreaX = new Vector2(-5f, 5f); // 掉落的水平范围（X轴）
-    public float dropY = 8f; // 掉落的初始Y坐标（天上的高度）
-    public float minDropInterval = 1f; // 最小掉落间隔（秒）
-    public float maxDropInterval = 3f; // 最大掉落间隔（秒）
-    public float minDropSpeed = 2f; // 方块初始下落速度（最小）
-    public float maxDropSpeed = 5f; // 方块初始下落速度（最大）
+    [Header("Drop Settings")]
+    public List<GameObject> dropPrefabs; // List of block prefabs to drop (supports multiple types)
+    public Vector2 dropAreaX = new Vector2(-5f, 5f); // Horizontal drop range (X axis)
+    public float dropY = 8f; // Initial Y coordinate for drop (height above)
+    public float minDropInterval = 1f; // Minimum drop interval (seconds)
+    public float maxDropInterval = 3f; // Maximum drop interval (seconds)
+    public float minDropSpeed = 2f; // Minimum initial drop speed
+    public float maxDropSpeed = 5f; // Maximum initial drop speed
 
-    [Header("进阶设置")]
-    public int maxActiveBlocks = 20; // 场景中最大活跃方块数量（防止堆积）
-    public float destroyY = -5f; // 方块落到该Y坐标以下自动销毁
-    public bool isDropLoop = true; // 是否持续掉落
-    public float startDelay = 1f; // 游戏启动后延迟多久开始掉落
+    [Header("Advanced Settings")]
+    public int maxActiveBlocks = 20; // Max number of active blocks in scene (prevent stacking)
+    public float destroyY = -5f; // Destroy block if below this Y coordinate
+    public bool isDropLoop = true; // Should blocks keep dropping
+    public float startDelay = 1f; // Delay before dropping starts after game launch
+    public float gravityScale = 0.5f;
 
-    // 内部变量
+    // Internal variables
     private List<GameObject> activeBlocks = new List<GameObject>();
     private Coroutine dropCoroutine;
 
     void Start()
     {
-        // 校验参数
+        // Validate parameters
         if (dropPrefabs == null || dropPrefabs.Count == 0)
         {
-            Debug.LogError("请至少添加一个掉落的预制体到dropPrefabs列表！");
+            Debug.LogError("Please add at least one prefab to dropPrefabs list!");
             return;
         }
 
-        // 启动掉落协程
+        // Start drop coroutine
         dropCoroutine = StartCoroutine(DropLoopCoroutine());
     }
 
     /// <summary>
-    /// 核心：循环掉落方块的协程
+    /// Core: Coroutine for dropping blocks in a loop
     /// </summary>
     private IEnumerator DropLoopCoroutine()
     {
-        // 启动延迟
+        // Start delay
         yield return new WaitForSeconds(startDelay);
 
         while (isDropLoop)
         {
-            // 检查最大活跃数量，超出则等待
+            // Check max active blocks, wait if exceeded
             if (activeBlocks.Count >= maxActiveBlocks)
             {
                 yield return new WaitForSeconds(0.5f);
                 continue;
             }
 
-            // 随机生成掉落间隔
+            // Random drop interval
             float randomInterval = Random.Range(minDropInterval, maxDropInterval);
             yield return new WaitForSeconds(randomInterval);
 
-            // 生成一个方块
+            // Spawn a block
             SpawnOneBlock();
         }
     }
 
     /// <summary>
-    /// 生成单个掉落方块
+    /// Spawn a single dropped block
     /// </summary>
     private void SpawnOneBlock()
     {
-        // 1. 随机选择一个预制体
+        // 1. Randomly select a prefab
         int randomPrefabIndex = Random.Range(0, dropPrefabs.Count);
         GameObject selectedPrefab = dropPrefabs[randomPrefabIndex];
         if (selectedPrefab == null) return;
 
-        // 2. 随机生成掉落位置（X轴在指定范围，Y轴固定）
+        // 2. Random drop position (X in range, Y fixed)
         float randomX = Random.Range(dropAreaX.x, dropAreaX.y);
         Vector3 spawnPos = new Vector3(randomX, dropY, 0f);
 
-        // 3. 实例化方块
+        // 3. Instantiate block
         GameObject block = Instantiate(selectedPrefab, spawnPos, Quaternion.identity);
         block.name = $"{selectedPrefab.name}_Drop_{activeBlocks.Count}";
 
-        // 4. 设置方块下落速度（随机）
+        // 4. Set block drop speed (random)
         Rigidbody2D rb = block.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             float randomSpeed = Random.Range(minDropSpeed, maxDropSpeed);
-            rb.velocity = new Vector2(0f, -randomSpeed); // 向下掉落（Y轴负方向）
+            rb.velocity = new Vector2(0f, -randomSpeed); // Drop downwards (negative Y)
+            rb.gravityScale = gravityScale;
         }
 
-        // 5. 加入活跃列表，绑定销毁检测
+        // 5. Add to active list, bind destroy check
         activeBlocks.Add(block);
         StartCoroutine(CheckBlockDestroy(block));
     }
 
     /// <summary>
-    /// 检测方块是否需要销毁（超出范围/被销毁）
+    /// Check if block needs to be destroyed (out of range/destroyed)
     /// </summary>
     private IEnumerator CheckBlockDestroy(GameObject block)
     {
         while (block != null)
         {
-            // 超出销毁Y坐标 → 销毁
+            // Destroy if below destroyY
             if (block.transform.position.y <= destroyY)
             {
                 Destroy(block);
@@ -113,7 +115,7 @@ public class RandomBlockDrop : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        // 从活跃列表移除
+        // Remove from active list
         if (activeBlocks.Contains(block))
         {
             activeBlocks.Remove(block);
@@ -121,7 +123,7 @@ public class RandomBlockDrop : MonoBehaviour
     }
 
     /// <summary>
-    /// 手动停止掉落（可选，比如游戏结束时调用）
+    /// Manually stop dropping (optional, e.g. call on game over)
     /// </summary>
     public void StopDrop()
     {
@@ -133,7 +135,7 @@ public class RandomBlockDrop : MonoBehaviour
     }
 
     /// <summary>
-    /// 手动清空所有掉落的方块（可选，比如重启场景时调用）
+    /// Manually clear all dropped blocks (optional, e.g. call on scene restart)
     /// </summary>
     public void ClearAllBlocks()
     {
@@ -147,7 +149,7 @@ public class RandomBlockDrop : MonoBehaviour
         activeBlocks.Clear();
     }
 
-    // 场景销毁时清空方块
+    // Clear blocks when scene is destroyed
     void OnDestroy()
     {
         ClearAllBlocks();

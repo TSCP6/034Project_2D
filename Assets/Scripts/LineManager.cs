@@ -28,21 +28,21 @@ public class LineLinkManager : MonoBehaviour
     [Header("State")]
     public bool isActive = false;
 
-    [Header("场景启动时自动连接【多物体+自定义连接点】")]
-    // 可配置多组连接，每组包含：两个物体 + 各自的自定义连接点
+
+    [Header("Auto Link on Scene Start (Multiple objects + custom anchor points)")]
+    // Configure multiple link groups, each group contains: two objects + their custom anchor points
     public List<InitialLinkGroup> initialLinkGroups = new List<InitialLinkGroup>();
 
-    // 【新增类：定义一组初始连接】
+    // New class: defines a group of initial links
     [System.Serializable]
     public class InitialLinkGroup
     {
-        public Rigidbody2D bodyA;          // 第一个物体
-        public Vector2 anchorA;            // 物体A的自定义连接点（本地坐标）
-        public Rigidbody2D bodyB;          // 第二个物体
-        public Vector2 anchorB;            // 物体B的自定义连接点（本地坐标）
-        public bool enableThisLink = true; // 是否启用这组连接
+        public Rigidbody2D bodyA;          // First object
+        public Vector2 anchorA;            // Custom anchor point for object A (local coordinates)
+        public Rigidbody2D bodyB;          // Second object
+        public Vector2 anchorB;            // Custom anchor point for object B (local coordinates)
+        public bool enableThisLink = true; // Enable this link group
     }
-
     private Rigidbody2D firstBody;
     private Vector2 firstWorldPoint;
     private GameObject previewRod;
@@ -64,64 +64,49 @@ public class LineLinkManager : MonoBehaviour
 
         UpdateUI();
 
-        // 游戏启动时，批量创建所有配置好的初始连接
+        // On game start, batch create all configured initial links
         CreateAllInitialLinks();
     }
 
     /// <summary>
-    /// 核心：批量创建所有初始连接（支持多组）
+    /// Core: batch create all initial links (supports multiple groups)
     /// </summary>
     private void CreateAllInitialLinks()
     {
         foreach (var linkGroup in initialLinkGroups)
         {
-            // 跳过未启用的连接组
             if (!linkGroup.enableThisLink) continue;
 
-            // 校验：两个物体都不能为空
             if (linkGroup.bodyA == null || linkGroup.bodyB == null)
             {
-                Debug.LogWarning("初始连接失败：某组连接的bodyA/bodyB为空！");
                 continue;
             }
 
-            // 校验：不是同一个物体
             if (linkGroup.bodyA == linkGroup.bodyB)
             {
-                Debug.LogWarning("初始连接失败：某组连接的bodyA和bodyB是同一个物体！");
                 continue;
             }
 
-            // 本地坐标 → 世界坐标（关键：自定义连接点的转换）
             Vector2 worldPosA = linkGroup.bodyA.transform.TransformPoint(linkGroup.anchorA);
             Vector2 worldPosB = linkGroup.bodyB.transform.TransformPoint(linkGroup.anchorB);
 
-            // 校验：距离不超过最大长度
             float dist = Vector2.Distance(worldPosA, worldPosB);
             if (dist > maxLength)
             {
-                Debug.LogWarning($"初始连接失败：{linkGroup.bodyA.name}和{linkGroup.bodyB.name}距离超过maxLength！");
                 continue;
             }
 
-            // 创建连接杆
             GameObject rod = Instantiate(rodPrefab);
             UpdateRodTransform(rod.transform, worldPosA, worldPosB, dist);
 
-            // 配置连接杆的刚体
             Rigidbody2D rodRb = rod.GetComponent<Rigidbody2D>();
             rodRb.isKinematic = false;
 
-            // 创建铰链关节（连接A）
             CreateHinge(rod, linkGroup.bodyA, rod.transform.InverseTransformPoint(worldPosA));
-            // 创建铰链关节（连接B）
             CreateHinge(rod, linkGroup.bodyB, rod.transform.InverseTransformPoint(worldPosB));
-
-            Debug.Log($"成功创建初始连接：{linkGroup.bodyA.name} ↔ {linkGroup.bodyB.name}");
         }
     }
 
-    // 【保留原有方法：手动连接逻辑】
     public void ToggleLinkMode()
     {
         if (remainingUses <= 0) return;

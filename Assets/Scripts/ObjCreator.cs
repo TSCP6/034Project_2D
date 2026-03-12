@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI; // ������UI��������ռ�
+using UnityEngine.UI; // UI references
 
 [System.Serializable]
 public class PrefabGroup
@@ -17,14 +17,14 @@ public class GroupSpawnOrder
     public List<int> prefabOrder = new List<int>();
 }
 
-// ����������������ã����л���Inspector�ɱ༭��
 [System.Serializable]
+// Group usage config, editable in Inspector
 public class GroupUsageConfig
 {
-    public string groupName; // ��ӦPrefabGroup������
-    public int maxUses = 5;  // �÷������ʹ�ô���
-    public int remainingUses; // ʣ�����
-    public Button uiButton;  // �÷����Ӧ��UI��ť�����ڱ�ң�
+    public string groupName; // Corresponds to PrefabGroup name
+    public int maxUses = 5;  // Maximum uses for this group
+    public int remainingUses; // Remaining uses
+    public Button uiButton;  // UI button for this group
 }
 
 public class ObjCreator : MonoBehaviour
@@ -32,15 +32,15 @@ public class ObjCreator : MonoBehaviour
     public List<PrefabGroup> prefabGroups = new List<PrefabGroup>();
     public List<GroupSpawnOrder> groupSpawnOrders = new List<GroupSpawnOrder>();
 
-    [Header("Ԥ������")]
+    [Header("Preview Settings")]
     public Material previewMaterial;
     public Color previewColor = new Color(1f, 1f, 1f, 0.4f);
     public float rotateSpeedDegrees = 180f;
     public Vector2 defaultPos;
 
-    [Header("�����������á�������")]
-    public List<GroupUsageConfig> groupUsageConfigs = new List<GroupUsageConfig>(); // �����������
-    public Color disabledButtonColor = new Color(1f, 1f, 1f, 0.7f); // ��ť��Һ����ɫ
+    [Header("Group Usage & Button Settings")]
+    public List<GroupUsageConfig> groupUsageConfigs = new List<GroupUsageConfig>(); // Group usage configs
+    public Color disabledButtonColor = new Color(1f, 1f, 1f, 0.7f); // Disabled button color
 
     private GameObject previewObject;
     private GameObject selectedPrefab;
@@ -55,8 +55,8 @@ public class ObjCreator : MonoBehaviour
     {
         mainCam = Camera.main;
         InitOrderIndices();
-        InitGroupUsage(); // ��ʼ���������
-        UpdateAllButtonStates(); // ��ʼ����ť״̬
+        InitGroupUsage();
+        UpdateAllButtonStates();
     }
 
     void Update()
@@ -93,13 +93,6 @@ public class ObjCreator : MonoBehaviour
 
     public void SelectPreviewByIndex(int groupIndex)
     {
-        // ������������������Ϊ0ֱ�ӷ���
-        if (!CanUseGroup(groupIndex))
-        {
-            Debug.LogWarning($"����{groupIndex}���������꣬�޷�����Ԥ����");
-            return;
-        }
-
         if (groupIndex < 0 || groupIndex >= prefabGroups.Count)
         {
             Debug.LogWarning($"Prefab group index out of range: {groupIndex}");
@@ -154,27 +147,24 @@ public class ObjCreator : MonoBehaviour
         waitMouseReleaseAfterButton = true;
     }
 
-    // ��������ʼ���������
     private void InitGroupUsage()
     {
         foreach (var config in groupUsageConfigs)
         {
-            config.remainingUses = config.maxUses; // ʣ�������ʼ��Ϊ������
+            config.remainingUses = config.maxUses;
         }
     }
 
-    // �������������Ƿ��ʹ�ã�����>0��
     private bool CanUseGroup(int groupIndex)
     {
         if (groupIndex < 0 || groupIndex >= groupUsageConfigs.Count)
         {
-            return true; // δ���ô����ķ���Ĭ�Ͽ�ʹ��
+            return true;
         }
         var config = groupUsageConfigs[groupIndex];
         return config.remainingUses > 0;
     }
 
-    // �������ۼ�������������°�ť״̬
     private void ConsumeGroupUsage(int groupIndex)
     {
         if (groupIndex < 0 || groupIndex >= groupUsageConfigs.Count)
@@ -185,12 +175,10 @@ public class ObjCreator : MonoBehaviour
         if (config.remainingUses > 0)
         {
             config.remainingUses--;
-            UpdateButtonState(groupIndex); // ���¶�Ӧ��ť״̬
-            Debug.Log($"����{groupIndex}ʣ�������{config.remainingUses}");
+            UpdateButtonState(groupIndex);
         }
     }
 
-    // ���������µ�������İ�ť״̬�����/���ã�
     private void UpdateButtonState(int groupIndex)
     {
         if (groupIndex < 0 || groupIndex >= groupUsageConfigs.Count)
@@ -203,7 +191,6 @@ public class ObjCreator : MonoBehaviour
             return;
         }
 
-        // ����Ϊ0ʱ����ť���ɽ��� + ���
         if (config.remainingUses <= 0)
         {
             config.uiButton.interactable = false;
@@ -212,7 +199,6 @@ public class ObjCreator : MonoBehaviour
             {
                 btnImage.color = disabledButtonColor;
             }
-            // �����ť�����֣�Ҳ����ͬ�����
             Text btnText = config.uiButton.GetComponentInChildren<Text>();
             if (btnText != null)
             {
@@ -221,22 +207,20 @@ public class ObjCreator : MonoBehaviour
         }
         else
         {
-            // ����>0ʱ���ָ��ɽ��� + �ָ�ԭ��ɫ
             config.uiButton.interactable = true;
             Image btnImage = config.uiButton.GetComponent<Image>();
             if (btnImage != null)
             {
-                btnImage.color = Color.white; // �ɸ�ΪĬ����ɫ����
+                btnImage.color = Color.white;
             }
             Text btnText = config.uiButton.GetComponentInChildren<Text>();
             if (btnText != null)
             {
-                btnText.color = Color.black; // �ɸ�ΪĬ��������ɫ
+                btnText.color = Color.black;
             }
         }
     }
 
-    // �������������з���İ�ť״̬
     private void UpdateAllButtonStates()
     {
         for (int i = 0; i < groupUsageConfigs.Count; i++)
@@ -380,8 +364,6 @@ public class ObjCreator : MonoBehaviour
         Vector3 finalPos = previewObject.transform.position;
         Quaternion finalRot = previewObject.transform.rotation;
         Instantiate(selectedPrefab, finalPos, finalRot);
-
-        // ���������������ۼ���Ӧ�������
         if (pendingGroupIndex >= 0)
         {
             ConsumeGroupUsage(pendingGroupIndex);
@@ -418,11 +400,9 @@ public class ObjCreator : MonoBehaviour
         return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 
-    // �������������з�������Ͱ�ť״̬����ѡ��������������ʱ���ã�
     public void ResetAllGroupUsage()
     {
         InitGroupUsage();
         UpdateAllButtonStates();
-        Debug.Log("���з�����������ã���ť״̬�ѻָ���");
     }
 }
