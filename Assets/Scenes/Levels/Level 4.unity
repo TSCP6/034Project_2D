@@ -2272,6 +2272,7 @@ MonoBehaviour:
   flashSpeed: 5
   isActive: 0
   initialLinkGroups: []
+  linkSound: {fileID: 8300000, guid: f06dc79463a9bd54ca2e06cc31c7cd29, type: 3}
 --- !u!1 &1840477457
 GameObject:
   m_ObjectHideFlags: 0

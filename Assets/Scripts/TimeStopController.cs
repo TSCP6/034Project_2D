@@ -19,7 +19,7 @@ public class TimeStopController : MonoBehaviour
 
         if (isStopped)
         {
-            Time.timeScale = 0.05f; // Time stopped
+            Time.timeScale = 0f; // Time stopped
             Debug.Log("Time has been stopped.");
         }
         else
