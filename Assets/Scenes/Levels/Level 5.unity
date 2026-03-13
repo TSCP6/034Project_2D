@@ -820,6 +820,7 @@ MonoBehaviour:
     m_Bits: 64
   triggerInterval: 3
   windDuration: 2
+  audioSource: {fileID: 0}
 --- !u!4 &375553584
 Transform:
   m_ObjectHideFlags: 0
@@ -2373,7 +2374,7 @@ MonoBehaviour:
   flashSpeed: 5
   isActive: 0
   initialLinkGroups: []
-  linkSound: {fileID: 8300000, guid: f06dc79463a9bd54ca2e06cc31c7cd29, type: 3}
+  linkSound: {fileID: 8300000, guid: 4db960a2acb8d2d42993ff547f4c91ff, type: 3}
 --- !u!1 &2064091065
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class WindController : MonoBehaviour
     private float timer;
     private bool isWindActive;
     private readonly HashSet<Rigidbody2D> bodiesInWind = new HashSet<Rigidbody2D>();
-
+    public AudioSource audioSource;
     void Reset()
     {
         // Automatically set collider as trigger on reset
@@ -46,6 +46,8 @@ public class WindController : MonoBehaviour
                 windDirection = -windDirection; // Reverse wind direction before each trigger
                 isWindActive = true; // Activate wind
                 timer = 0f; // Reset timer, start wind duration countdown
+                audioSource.Play();
+
                 Debug.Log($"Wind triggered! Current direction: {windDirection}");
             }
         }
