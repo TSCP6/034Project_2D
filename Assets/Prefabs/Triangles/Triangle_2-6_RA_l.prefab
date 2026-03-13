@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -8154650417677051165}
   - component: {fileID: 8571406020993117087}
   - component: {fileID: 5608965797609570401}
+  - component: {fileID: 9159115589837531699}
   m_Layer: 6
   m_Name: Triangle_2-6_RA_l
   m_TagString: Player
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6813883518310458111}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.499, y: -0.4985, z: 0}
+  m_LocalPosition: {x: 2.498, y: -0.491, z: 0}
   m_LocalScale: {x: 0.1438, y: 0.4307247, z: 0.1438}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c1c02f17c1a035240970adb0d65200af, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 990a5aff2b51b214c959c7d987f5f322, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 8.16, y: 8.16}
+  m_DrawMode: 1
+  m_Size: {x: 7, y: 7}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -150,10 +151,10 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.95, y: 6.95}
-    newSize: {x: 8.16, y: 8.16}
+    oldSize: {x: 2.2, y: 6.6}
+    newSize: {x: 7, y: 7}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Points:
@@ -174,3 +175,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a3fd3c3439f9840b444cb1da0fcc58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9159115589837531699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6813883518310458111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6508de51043e67440bb519e90abe01cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - sprite: {fileID: 21300000, guid: 990a5aff2b51b214c959c7d987f5f322, type: 3}
+    level: 1
+  - sprite: {fileID: 21300000, guid: 227e9202eb62f7c4f9f95069a46bbbd6, type: 3}
+    level: 2
+  - sprite: {fileID: 21300000, guid: 19baa106112560048be9893e9d64058f, type: 3}
+    level: 3
+  - sprite: {fileID: 21300000, guid: bc1f29a108efcb7499b22394dc450f32, type: 3}
+    level: 4
+  sprite: {fileID: 0}

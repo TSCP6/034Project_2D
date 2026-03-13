@@ -180,7 +180,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 3bdfa3dc53734bc4eae3f4dd0e89b66a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8368ec57e51121e439f750900d42317f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2364,7 +2364,7 @@ MonoBehaviour:
   prefabGroups:
   - groupName: Triangle
     prefabs:
-    - {fileID: 7455935044586011102, guid: 3c045ec9c4a038646b622debf616a5cc, type: 3}
+    - {fileID: 6509002996542727164, guid: 2394abe208ff0d44dbabc6a0f416c544, type: 3}
     - {fileID: 1908044372334091969, guid: 2fa8a34d14021ee4fb8249b34abe3534, type: 3}
     - {fileID: 6813883518310458111, guid: 66d0f4092b675f942a1b6e617476d7d5, type: 3}
     - {fileID: 4684857368855679782, guid: 61450261c6a57844284d14edcca21a1e, type: 3}

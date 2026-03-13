@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2881670205427416579}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8246004, y: 0.86918074, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -77,11 +77,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 20fb5b82cdfb5a34eb20fc2f6a0015a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 1
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -157,17 +157,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2881670205427416579}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6508de51043e67440bb519e90abe01cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - sprite: {fileID: 21300000, guid: bf47d64de6994ae439ca588c035a85a3, type: 3}
+  - sprite: {fileID: 21300000, guid: 20fb5b82cdfb5a34eb20fc2f6a0015a7, type: 3}
     level: 1
+  - sprite: {fileID: 21300000, guid: c75c2c70e84351045992fbffccbff3d3, type: 3}
+    level: 2
+  - sprite: {fileID: 21300000, guid: fade117f78aa54f42acd15da5ee04853, type: 3}
+    level: 3
+  - sprite: {fileID: 21300000, guid: 0ae50104471ff9a4d8411d610f2b353f, type: 3}
+    level: 4
   sprite: {fileID: 0}
-  keepWorldSize: 1
-  syncColliderShape: 1
 --- !u!114 &2694315178153849939
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -77,11 +77,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f7589225cb17d224ca0d56fd85566edf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 1
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -157,17 +157,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6530618941942140198}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6508de51043e67440bb519e90abe01cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - sprite: {fileID: 21300000, guid: bf47d64de6994ae439ca588c035a85a3, type: 3}
+  - sprite: {fileID: 21300000, guid: f7589225cb17d224ca0d56fd85566edf, type: 3}
     level: 1
+  - sprite: {fileID: 21300000, guid: f4c41e33ddbc8814a8a7fe3541476bb7, type: 3}
+    level: 2
+  - sprite: {fileID: 21300000, guid: 30719ecf70d0128409ae4a4d25920ca9, type: 3}
+    level: 3
+  - sprite: {fileID: 21300000, guid: 1b87a92a031e5134e94118eb5e5d1579, type: 3}
+    level: 4
   sprite: {fileID: 0}
-  keepWorldSize: 1
-  syncColliderShape: 1
 --- !u!114 &-5192491997991181436
 MonoBehaviour:
   m_ObjectHideFlags: 0
