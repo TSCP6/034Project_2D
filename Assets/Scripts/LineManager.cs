@@ -28,21 +28,24 @@ public class LineLinkManager : MonoBehaviour
     [Header("State")]
     public bool isActive = false;
 
-
     [Header("Auto Link on Scene Start (Multiple objects + custom anchor points)")]
-    // Configure multiple link groups, each group contains: two objects + their custom anchor points
     public List<InitialLinkGroup> initialLinkGroups = new List<InitialLinkGroup>();
 
-    // New class: defines a group of initial links
     [System.Serializable]
     public class InitialLinkGroup
     {
-        public Rigidbody2D bodyA;          // First object
-        public Vector2 anchorA;            // Custom anchor point for object A (local coordinates)
-        public Rigidbody2D bodyB;          // Second object
-        public Vector2 anchorB;            // Custom anchor point for object B (local coordinates)
-        public bool enableThisLink = true; // Enable this link group
+        public Rigidbody2D bodyA;
+        public Vector2 anchorA;
+        public Rigidbody2D bodyB;
+        public Vector2 anchorB;
+        public bool enableThisLink = true;
     }
+
+    // 音效相关（仅保留开始/完成连接共用的音效）
+    [Header("Sound Settings")]
+    public AudioClip linkSound;       // 开始连接和完成连接共用的音效
+    private AudioSource audioSource;  // 音频源组件
+
     private Rigidbody2D firstBody;
     private Vector2 firstWorldPoint;
     private GameObject previewRod;
@@ -62,10 +65,28 @@ public class LineLinkManager : MonoBehaviour
             originalBtnColor = buttonImage.color;
         }
 
-        UpdateUI();
+        // 初始化音频源（自动创建，避免手动添加）
+        if (linkSound != null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false; // 避免启动时自动播放
+            audioSource.volume = 1f;         // 音量可根据需要调整
+        }
 
-        // On game start, batch create all configured initial links
+        UpdateUI();
         CreateAllInitialLinks();
+    }
+
+    /// <summary>
+    /// 播放连接音效的通用方法
+    /// </summary>
+    private void PlayLinkSound()
+    {
+        // 空值判断，避免报错
+        if (audioSource != null && linkSound != null)
+        {
+            audioSource.PlayOneShot(linkSound);
+        }
     }
 
     /// <summary>
@@ -162,6 +183,9 @@ public class LineLinkManager : MonoBehaviour
         previewRod.GetComponent<Collider2D>().enabled = false;
         previewRod.GetComponent<Rigidbody2D>().isKinematic = true;
         previewRenderer = previewRod.GetComponent<SpriteRenderer>();
+
+        // 开始连接时播放音效
+        PlayLinkSound();
     }
 
     void UpdateLinkPreview()
@@ -206,6 +230,9 @@ public class LineLinkManager : MonoBehaviour
         Destroy(previewRod);
         previewRod = null;
         FinishCurrentLinkAttempt();
+
+        // 完成连接时播放音效
+        PlayLinkSound();
     }
 
     void CreateHinge(GameObject rod, Rigidbody2D connectedTarget, Vector2 anchorOnRod)

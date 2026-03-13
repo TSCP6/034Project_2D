@@ -2367,12 +2367,13 @@ MonoBehaviour:
   rodWidth: 0.2
   linkButton: {fileID: 2064091067}
   usageText: {fileID: 0}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  normalColor: {r: 1, g: 0.505899, b: 0, a: 0.5529412}
   warningColor: {r: 1, g: 0, b: 0, a: 1}
   flashColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   flashSpeed: 5
   isActive: 0
   initialLinkGroups: []
+  linkSound: {fileID: 8300000, guid: f06dc79463a9bd54ca2e06cc31c7cd29, type: 3}
 --- !u!1 &2064091065
 GameObject:
   m_ObjectHideFlags: 0
