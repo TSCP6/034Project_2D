@@ -1366,8 +1366,8 @@ MonoBehaviour:
     prefabs:
     - {fileID: 7455935044586011102, guid: 3c045ec9c4a038646b622debf616a5cc, type: 3}
     - {fileID: 1908044372334091969, guid: 2fa8a34d14021ee4fb8249b34abe3534, type: 3}
-    - {fileID: 4684857368855679782, guid: 61450261c6a57844284d14edcca21a1e, type: 3}
     - {fileID: 6813883518310458111, guid: 66d0f4092b675f942a1b6e617476d7d5, type: 3}
+    - {fileID: 4684857368855679782, guid: 61450261c6a57844284d14edcca21a1e, type: 3}
   - groupName: Square
     prefabs:
     - {fileID: 519099820679181832, guid: 0925cc7cd771a304c9fce557d228a5b6, type: 3}
@@ -1380,9 +1380,9 @@ MonoBehaviour:
     - {fileID: 2881670205427416579, guid: 6b478a02cdf80ac43a678f65439de7b1, type: 3}
   groupSpawnOrders:
   - groupName: Triangle
-    prefabOrder: 00000000010000000200000003000000
+    prefabOrder: 000000000200000001000000010000000200000003000000
   - groupName: Square
-    prefabOrder: 030000000200000000000000010000000000000000000000010000000000000000000000010000000100000001000000
+    prefabOrder: 030000000200000000000000010000000000000002000000010000000100000001000000000000000100000001000000
   - groupName: Circle
     prefabOrder: 000000000100000000000000000000000100000000000000
   previewMaterial: {fileID: 0}
@@ -1391,7 +1391,7 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0}
   groupUsageConfigs:
   - groupName: Triangle
-    maxUses: 4
+    maxUses: 6
     remainingUses: 0
     uiButton: {fileID: 1400852187}
   - groupName: Square
