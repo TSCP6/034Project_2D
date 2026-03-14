@@ -109,6 +109,16 @@ MonoBehaviour:
     level: 3
   - sprite: {fileID: 21300000, guid: 2392aeb3c2b8e434aa57c19fc0cb6482, type: 3}
     level: 4
+  - sprite: {fileID: 21300000, guid: d1dcd95df234d8940afcc8daac478f85, type: 3}
+    level: 5
+  - sprite: {fileID: 21300000, guid: 99557260fbdb0ba4eabd5625da56e342, type: 3}
+    level: 6
+  - sprite: {fileID: 21300000, guid: 3489b7f194702964ba86ec52129741f1, type: 3}
+    level: 7
+  - sprite: {fileID: 21300000, guid: 5932ec695dccc8842887cdc11f6a7ec1, type: 3}
+    level: 8
+  - sprite: {fileID: 21300000, guid: b06473f136ac81447a196faa106c196c, type: 3}
+    level: 9
   sprite: {fileID: 0}
 --- !u!60 &3884501855750286709
 PolygonCollider2D:

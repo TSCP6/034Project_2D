@@ -196,4 +196,14 @@ MonoBehaviour:
     level: 3
   - sprite: {fileID: 21300000, guid: 9d82891ef24ec0646b3d6cad6c49c4dd, type: 3}
     level: 4
+  - sprite: {fileID: 21300000, guid: 9d88b1d82dd7f024cb9349df7d5b3bf1, type: 3}
+    level: 5
+  - sprite: {fileID: 21300000, guid: ca8fd192ec4a2774bb819b5a2da1ba7f, type: 3}
+    level: 6
+  - sprite: {fileID: 21300000, guid: 499fa83cac57bb648a0b413b60af2b0b, type: 3}
+    level: 7
+  - sprite: {fileID: 21300000, guid: 02a48f769e006bd4dba8c6c2ae69f68b, type: 3}
+    level: 8
+  - sprite: {fileID: 21300000, guid: 258400185a20b41469313dafacf37ed8, type: 3}
+    level: 9
   sprite: {fileID: 0}
