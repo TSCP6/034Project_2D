@@ -2961,7 +2961,7 @@ MonoBehaviour:
     bodyB: {fileID: 0}
     anchorB: {x: -0.3, y: 0}
     enableThisLink: 1
-  linkSound: {fileID: 8300000, guid: 4db960a2acb8d2d42993ff547f4c91ff, type: 3}
+  linkSound: {fileID: 8300000, guid: a0a5656480910b049b16a83cdb9d2c45, type: 3}
 --- !u!1 &1840477457
 GameObject:
   m_ObjectHideFlags: 0

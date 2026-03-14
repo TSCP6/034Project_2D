@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI; // 引用UI命名空间
 
 public class DeleteObj : MonoBehaviour
@@ -14,11 +15,13 @@ public class DeleteObj : MonoBehaviour
     private List<GameObject> deletableObjects = new List<GameObject>();
     private int totalObjectCount;
     private int deletedObjectCount;
+    private int index;
 
     void Start()
     {
         // 找到场景中所有属于可删除层的物体
         GameObject[] allObjects = FindObjectsOfType<GameObject>();
+        index = SceneManager.GetActiveScene().buildIndex;
         foreach (var obj in allObjects)
         {
             // 检查物体的层是否在deletableLayer中
@@ -63,6 +66,7 @@ public class DeleteObj : MonoBehaviour
                     if (deletableObjects.Count == 0)
                     {
                         LevelComplete();
+                        SceneManager.LoadScene(index + 1);
                     }
                 }
             }

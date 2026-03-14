@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; // 必须引入，用于检测关卡切换
 
 // 单例音频管理器：全局背景音乐播放
 public class Music : MonoBehaviour
@@ -9,58 +10,76 @@ public class Music : MonoBehaviour
     [Header("背景音乐设置")]
     public AudioClip bgmClip;          // 背景音乐文件
     public float bgmVolume = 0.5f;     // 背景音乐音量（0-1）
-    public bool playOnStart = true;    // 启动游戏时自动播放
+    public bool playOnStart = true;    // 启动游戏时是否自动播放
     public bool loopBgm = true;        // 是否循环播放
+
+    [Header("特殊关卡设置")]
+    public string silentSceneName = "Level10"; // 不播放音乐的场景名称
 
     private AudioSource bgmAudioSource; // 背景音乐音频源
 
-    // 初始化单例 + 音频源
     private void Awake()
     {
-        // 单例逻辑：确保只有一个实例
+        // 单例逻辑
         if (Instance == null)
         {
             Instance = this;
-            // 标记为跨场景不销毁
             DontDestroyOnLoad(gameObject);
-
-            // 初始化音频源
             InitAudioSource();
         }
         else
         {
-            // 如果已有实例，销毁重复的物体
             Destroy(gameObject);
         }
     }
 
-    // 初始化音频源组件
     private void InitAudioSource()
     {
-        // 添加音频源组件（如果没有）
         bgmAudioSource = GetComponent<AudioSource>();
         if (bgmAudioSource == null)
         {
             bgmAudioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        // 配置音频源参数
         bgmAudioSource.clip = bgmClip;
         bgmAudioSource.volume = bgmVolume;
         bgmAudioSource.loop = loopBgm;
-        bgmAudioSource.playOnAwake = false; // 手动控制播放，避免自动重复
+        bgmAudioSource.playOnAwake = false;
     }
 
-    // 游戏启动时自动播放（可选）
-    private void Start()
+    // --- 核心修改部分：监听场景加载 ---
+
+    private void OnEnable()
     {
-        if (playOnStart && bgmClip != null)
+        // 注册场景加载事件
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        // 注销场景加载事件
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 判断是否是第10关（或者你指定的静音关卡）
+        if (scene.name == silentSceneName)
         {
-            PlayBGM();
+            StopBGM();
+        }
+        else
+        {
+            // 如果不是第10关，且勾选了自动播放，则确保音乐响起
+            if (playOnStart)
+            {
+                PlayBGM();
+            }
         }
     }
 
-    // 播放背景音乐（外部可调用，比如手动触发播放）
+    // --- 播放控制方法 ---
+
     public void PlayBGM()
     {
         if (bgmAudioSource != null && bgmClip != null && !bgmAudioSource.isPlaying)
@@ -69,7 +88,6 @@ public class Music : MonoBehaviour
         }
     }
 
-    // 暂停背景音乐
     public void PauseBGM()
     {
         if (bgmAudioSource != null && bgmAudioSource.isPlaying)
@@ -78,7 +96,6 @@ public class Music : MonoBehaviour
         }
     }
 
-    // 停止背景音乐
     public void StopBGM()
     {
         if (bgmAudioSource != null)
@@ -87,12 +104,11 @@ public class Music : MonoBehaviour
         }
     }
 
-    // 调整背景音乐音量（外部可调用，比如音量滑块）
     public void SetBGMVolume(float volume)
     {
         if (bgmAudioSource != null)
         {
-            bgmVolume = Mathf.Clamp01(volume); // 限制音量在0-1之间
+            bgmVolume = Mathf.Clamp01(volume);
             bgmAudioSource.volume = bgmVolume;
         }
     }
